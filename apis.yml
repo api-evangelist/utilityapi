@@ -1,8 +1,7 @@
 aid: utilityapi
 name: UtilityAPI
 description: >-
-  We collect, standardize, and share utility data seamlessly and securely in
-  minutes. 
+  We collect, standardize, and share utility data seamlessly and securely in minutes.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -18,8 +17,7 @@ apis:
   - aid: utilityapi:utilityapi
     name: UtilityAPI
     description: >-
-      We collect, standardize, and share utility data seamlessly and securely in
-      minutes. 
+      We collect, standardize, and share utility data seamlessly and securely in minutes.
     humanURL: ' https://utilityapi.com/'
     tags:
       - API
