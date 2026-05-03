@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://utilityapi.com/schemas/interval",
+  "title": "Interval",
+  "description": "A meter usage interval measurement",
+  "type": "object",
+  "properties": {
+    "uid": {
+      "type": "string",
+      "description": "Unique identifier for the interval"
+    },
+    "meter_uid": {
+      "type": "string",
+      "description": "UID of the meter this interval belongs to"
+    },
+    "start": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Start of the interval period"
+    },
+    "end": {
+      "type": "string",
+      "format": "date-time",
+      "description": "End of the interval period"
+    },
+    "kwh": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Energy consumption in kWh during this interval"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the interval was recorded"
+    }
+  },
+  "required": ["uid", "meter_uid", "start", "end", "kwh"]
+}

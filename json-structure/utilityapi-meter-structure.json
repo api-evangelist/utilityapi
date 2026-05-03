@@ -1,0 +1,15 @@
+{
+  "name": "Meter",
+  "description": "Utility service meter structure",
+  "fields": [
+    { "name": "uid", "type": "string", "required": true, "description": "Unique identifier" },
+    { "name": "authorization_uid", "type": "string", "required": true, "description": "Parent authorization" },
+    { "name": "utility", "type": "string", "required": true, "description": "Utility provider name" },
+    { "name": "service_address", "type": "string", "required": false, "description": "Service address" },
+    { "name": "meter_number", "type": "string", "required": false, "description": "Utility meter number" },
+    { "name": "service_class", "type": "enum[ELECTRIC,GAS,WATER]", "required": true, "description": "Service type" },
+    { "name": "status", "type": "string", "required": false, "description": "Meter status" },
+    { "name": "created", "type": "datetime", "required": false, "description": "Creation timestamp" },
+    { "name": "modified", "type": "datetime", "required": false, "description": "Last modified timestamp" }
+  ]
+}

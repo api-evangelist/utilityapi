@@ -1,0 +1,43 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://utilityapi.com/api/v2/bills",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_TOKEN"
+    },
+    "query": {
+      "meter_uid": "meter_xyz789",
+      "start": "2024-01-01",
+      "end": "2024-12-31",
+      "limit": 12
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "bills": [
+        {
+          "uid": "bill_001abc",
+          "meter_uid": "meter_xyz789",
+          "statement_date": "2024-02-01",
+          "due_date": "2024-02-20",
+          "total_kwh": 450.5,
+          "total_amount": 89.32,
+          "currency": "USD",
+          "created": "2024-02-01T08:00:00Z"
+        },
+        {
+          "uid": "bill_002def",
+          "meter_uid": "meter_xyz789",
+          "statement_date": "2024-03-01",
+          "due_date": "2024-03-20",
+          "total_kwh": 512.0,
+          "total_amount": 102.15,
+          "currency": "USD",
+          "created": "2024-03-01T08:00:00Z"
+        }
+      ],
+      "next": null
+    }
+  }
+}

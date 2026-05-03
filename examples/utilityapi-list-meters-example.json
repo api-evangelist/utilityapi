@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://utilityapi.com/api/v2/meters",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_TOKEN"
+    },
+    "query": {
+      "limit": 10,
+      "authorization_uid": "auth_abc123"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "meters": [
+        {
+          "uid": "meter_xyz789",
+          "authorization_uid": "auth_abc123",
+          "utility": "Pacific Gas and Electric",
+          "service_address": "123 Main St, San Francisco, CA 94102",
+          "meter_number": "1234567890",
+          "service_class": "ELECTRIC",
+          "status": "active",
+          "created": "2024-01-15T10:30:00Z",
+          "modified": "2024-03-20T14:22:00Z"
+        }
+      ],
+      "next": null
+    }
+  }
+}

@@ -1,0 +1,85 @@
+vocabulary:
+  name: UtilityAPI Vocabulary
+  description: Domain vocabulary for utility energy data, metering, and billing
+  version: '1.0'
+  created: '2026-05-03'
+  modified: '2026-05-03'
+  terms:
+    - term: Meter
+      definition: A utility service point that measures consumption of electricity, gas, or water
+      category: Resource
+      tags:
+        - Energy
+        - Utilities
+    - term: Bill
+      definition: A periodic statement of utility consumption and charges for a meter
+      category: Resource
+      tags:
+        - Billing
+        - Finance
+    - term: Interval
+      definition: A time-bounded measurement of energy consumption at a meter, typically 15 or 30 minutes
+      category: Resource
+      tags:
+        - Energy
+        - Time Series
+    - term: Authorization
+      definition: A customer's consent granting access to their utility data
+      category: Resource
+      tags:
+        - Authorization
+        - Consent
+    - term: Form
+      definition: A customer-facing web form for collecting utility data authorization consent
+      category: Resource
+      tags:
+        - Authorization
+        - Forms
+    - term: Template
+      definition: A reusable formatting configuration for authorization forms
+      category: Resource
+      tags:
+        - Forms
+        - Configuration
+    - term: Event
+      definition: A webhook notification triggered by changes to authorizations or meter data
+      category: Resource
+      tags:
+        - Webhooks
+        - Events
+    - term: Green Button
+      definition: An industry standard for secure, consumer-authorized sharing of utility data
+      category: Standard
+      tags:
+        - Standard
+        - Energy
+    - term: kWh
+      definition: Kilowatt-hour, the unit of electricity consumption measurement
+      category: Unit
+      tags:
+        - Energy
+        - Measurement
+    - term: Billing Account
+      definition: A customer's utility billing account linked to one or more meters
+      category: Resource
+      tags:
+        - Billing
+        - Accounting
+    - term: Service Class
+      definition: The type of utility service - ELECTRIC, GAS, or WATER
+      category: Classification
+      tags:
+        - Utilities
+        - Classification
+    - term: Data Collection
+      definition: The process of retrieving historical and current utility data from a utility provider
+      category: Operation
+      tags:
+        - Data
+        - Collection
+    - term: Monitoring
+      definition: Ongoing automated retrieval of utility data updates as they become available
+      category: Operation
+      tags:
+        - Data
+        - Monitoring

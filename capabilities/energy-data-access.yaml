@@ -1,0 +1,312 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: UtilityAPI Energy Data Access
+  description: >-
+    Unified workflow capability for accessing utility energy data including meters,
+    billing history, interval usage, and authorization management. Designed for
+    cleantech developers, energy analytics platforms, and EV charging optimization tools.
+  tags:
+    - Energy
+    - Utilities
+    - Billing
+    - Meter Data
+    - Green Button
+    - Clean Energy
+    - EV Charging
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      UTILITYAPI_TOKEN: UTILITYAPI_TOKEN
+
+capability:
+  consumes:
+    - import: utilityapi
+      location: ./shared/utilityapi.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: energy-data-api
+      description: Unified REST API for energy data access and utility management.
+      resources:
+        - path: /v1/meters
+          name: meters
+          description: Utility meter access for authorized customers
+          operations:
+            - method: GET
+              name: list-meters
+              description: List all utility meters for authorized customers
+              call: "utilityapi.list-meters"
+              with:
+                authorization_uid: "rest.authorization_uid"
+                limit: "rest.limit"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/meters/{uid}
+          name: meter
+          description: Individual meter details
+          operations:
+            - method: GET
+              name: get-meter
+              description: Get a specific utility meter
+              call: "utilityapi.get-meter"
+              with:
+                uid: "rest.uid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/meters/{uid}/collect
+          name: meter-collect
+          description: Trigger meter data collection
+          operations:
+            - method: POST
+              name: collect-meter-data
+              description: Trigger data collection for a meter
+              call: "utilityapi.collect-meter-data"
+              with:
+                uid: "rest.uid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/meters/{uid}/monitor
+          name: meter-monitor
+          description: Enable meter monitoring
+          operations:
+            - method: POST
+              name: monitor-meter-data
+              description: Enable ongoing monitoring for a meter
+              call: "utilityapi.monitor-meter-data"
+              with:
+                uid: "rest.uid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/bills
+          name: bills
+          description: Utility billing data
+          operations:
+            - method: GET
+              name: list-bills
+              description: List utility bills for authorized meters
+              call: "utilityapi.list-bills"
+              with:
+                meter_uid: "rest.meter_uid"
+                start: "rest.start"
+                end: "rest.end"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/intervals
+          name: intervals
+          description: Meter usage interval data
+          operations:
+            - method: GET
+              name: list-intervals
+              description: List meter usage intervals
+              call: "utilityapi.list-intervals"
+              with:
+                meter_uid: "rest.meter_uid"
+                start: "rest.start"
+                end: "rest.end"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/authorizations
+          name: authorizations
+          description: Customer authorizations
+          operations:
+            - method: GET
+              name: list-authorizations
+              description: List all customer authorizations
+              call: "utilityapi.list-authorizations"
+              with:
+                status: "rest.status"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/authorizations/{uid}/revoke
+          name: authorization-revoke
+          description: Revoke a customer authorization
+          operations:
+            - method: POST
+              name: revoke-authorization
+              description: Revoke a customer's utility data authorization
+              call: "utilityapi.revoke-authorization"
+              with:
+                uid: "rest.uid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/events
+          name: events
+          description: Webhook events
+          operations:
+            - method: GET
+              name: list-events
+              description: List webhook events
+              call: "utilityapi.list-events"
+              with:
+                type: "rest.type"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/billing-accounts
+          name: billing-accounts
+          description: Customer billing accounts
+          operations:
+            - method: GET
+              name: list-billing-accounts
+              description: List customer billing accounts
+              call: "utilityapi.list-billing-accounts"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/billing-summaries
+          name: billing-summaries
+          description: Billing summaries
+          operations:
+            - method: GET
+              name: list-billing-summaries
+              description: List billing summaries
+              call: "utilityapi.list-billing-summaries"
+              with:
+                billing_account_uid: "rest.billing_account_uid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: energy-data-mcp
+      transport: http
+      description: MCP server for AI-assisted energy data analysis and utility management.
+      tools:
+        - name: list-meters
+          description: List utility meters for authorized customers
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-meters"
+          with:
+            authorization_uid: "tools.authorization_uid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-meter
+          description: Get details for a specific utility meter
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "utilityapi.get-meter"
+          with:
+            uid: "tools.uid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: collect-meter-data
+          description: Trigger data collection for a utility meter
+          hints:
+            readOnly: false
+            destructive: false
+          call: "utilityapi.collect-meter-data"
+          with:
+            uid: "tools.uid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: monitor-meter-data
+          description: Enable ongoing data monitoring for a utility meter
+          hints:
+            readOnly: false
+            idempotent: true
+          call: "utilityapi.monitor-meter-data"
+          with:
+            uid: "tools.uid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-bills
+          description: List utility billing history for a meter
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-bills"
+          with:
+            meter_uid: "tools.meter_uid"
+            start: "tools.start"
+            end: "tools.end"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-intervals
+          description: List meter usage interval data for energy analysis
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-intervals"
+          with:
+            meter_uid: "tools.meter_uid"
+            start: "tools.start"
+            end: "tools.end"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-authorizations
+          description: List customer utility data authorizations
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-authorizations"
+          with:
+            status: "tools.status"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: revoke-authorization
+          description: Revoke a customer's utility data authorization
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "utilityapi.revoke-authorization"
+          with:
+            uid: "tools.uid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-events
+          description: List webhook events for monitoring data updates
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-events"
+          with:
+            type: "tools.type"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-billing-accounts
+          description: List customer billing accounts
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-billing-accounts"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-billing-summaries
+          description: List billing summaries for energy cost analysis
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-billing-summaries"
+          with:
+            billing_account_uid: "tools.billing_account_uid"
+          outputParameters:
+            - type: object
+              mapping: "$."

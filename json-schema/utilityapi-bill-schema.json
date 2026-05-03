@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://utilityapi.com/schemas/bill",
+  "title": "Bill",
+  "description": "A utility bill associated with a meter",
+  "type": "object",
+  "properties": {
+    "uid": {
+      "type": "string",
+      "description": "Unique identifier for the bill"
+    },
+    "meter_uid": {
+      "type": "string",
+      "description": "UID of the meter this bill belongs to"
+    },
+    "statement_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the bill was issued"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Payment due date"
+    },
+    "total_kwh": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total electricity consumption in kWh"
+    },
+    "total_amount": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Total bill amount"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD",
+      "description": "Currency code for the bill amount"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the bill was added to the system"
+    }
+  },
+  "required": ["uid", "meter_uid", "statement_date", "total_amount"]
+}

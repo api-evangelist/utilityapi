@@ -1,0 +1,33 @@
+{
+  "@context": {
+    "@vocab": "https://utilityapi.com/vocab#",
+    "schema": "https://schema.org/",
+    "energy": "https://www.w3.org/ns/sosa/",
+    "uid": "@id",
+    "Meter": "schema:Utility",
+    "Bill": "schema:Invoice",
+    "Interval": "energy:Observation",
+    "Authorization": "schema:DigitalDocument",
+    "utility": "schema:serviceType",
+    "service_address": "schema:address",
+    "meter_number": "schema:identifier",
+    "service_class": "schema:additionalType",
+    "statement_date": "schema:dateIssued",
+    "due_date": "schema:paymentDueDate",
+    "total_kwh": {
+      "@id": "https://schema.org/energy",
+      "@type": "schema:QuantitativeValue"
+    },
+    "total_amount": "schema:totalPaymentDue",
+    "currency": "schema:priceCurrency",
+    "start": "schema:startDate",
+    "end": "schema:endDate",
+    "kwh": {
+      "@id": "https://schema.org/energy",
+      "@type": "schema:QuantitativeValue"
+    },
+    "created": "schema:dateCreated",
+    "modified": "schema:dateModified",
+    "status": "schema:status"
+  }
+}

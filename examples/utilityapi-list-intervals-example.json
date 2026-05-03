@@ -1,0 +1,39 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://utilityapi.com/api/v2/intervals",
+    "headers": {
+      "Authorization": "Bearer YOUR_API_TOKEN"
+    },
+    "query": {
+      "meter_uid": "meter_xyz789",
+      "start": "2024-03-01T00:00:00Z",
+      "end": "2024-03-07T23:59:59Z",
+      "limit": 100
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "intervals": [
+        {
+          "uid": "int_aaa001",
+          "meter_uid": "meter_xyz789",
+          "start": "2024-03-01T00:00:00Z",
+          "end": "2024-03-01T00:15:00Z",
+          "kwh": 0.25,
+          "created": "2024-03-01T01:00:00Z"
+        },
+        {
+          "uid": "int_aaa002",
+          "meter_uid": "meter_xyz789",
+          "start": "2024-03-01T00:15:00Z",
+          "end": "2024-03-01T00:30:00Z",
+          "kwh": 0.30,
+          "created": "2024-03-01T01:00:00Z"
+        }
+      ],
+      "next": "cursor_xyz"
+    }
+  }
+}

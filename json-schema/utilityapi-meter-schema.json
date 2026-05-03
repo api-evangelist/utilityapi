@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://utilityapi.com/schemas/meter",
+  "title": "Meter",
+  "description": "A utility service meter associated with an authorized customer account",
+  "type": "object",
+  "properties": {
+    "uid": {
+      "type": "string",
+      "description": "Unique identifier for the meter"
+    },
+    "authorization_uid": {
+      "type": "string",
+      "description": "UID of the authorization this meter belongs to"
+    },
+    "utility": {
+      "type": "string",
+      "description": "Name of the utility provider"
+    },
+    "service_address": {
+      "type": "string",
+      "description": "Physical service address for this meter"
+    },
+    "meter_number": {
+      "type": "string",
+      "description": "Meter number assigned by the utility"
+    },
+    "service_class": {
+      "type": "string",
+      "enum": ["ELECTRIC", "GAS", "WATER"],
+      "description": "Type of utility service"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the meter"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the meter was added to the system"
+    },
+    "modified": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the meter was last updated"
+    }
+  },
+  "required": ["uid", "authorization_uid", "utility", "service_class"]
+}

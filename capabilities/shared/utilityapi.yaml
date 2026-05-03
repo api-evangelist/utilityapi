@@ -1,0 +1,391 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: UtilityAPI
+  description: >-
+    UtilityAPI provides REST access to utility meter data, billing information,
+    interval usage data, and customer authorization workflows for energy applications.
+  tags:
+    - Energy
+    - Utilities
+    - Billing
+    - Meter Data
+    - Green Button
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      UTILITYAPI_TOKEN: UTILITYAPI_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: utilityapi
+      baseUri: https://utilityapi.com/api/v2
+      description: UtilityAPI REST API for utility data access
+      authentication:
+        type: bearer
+        token: "{{UTILITYAPI_TOKEN}}"
+      resources:
+        - name: meters
+          path: /meters
+          description: Utility service meters for authorized customers
+          operations:
+            - name: list-meters
+              method: GET
+              description: List all utility meters for authorized customers
+              inputParameters:
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: Maximum number of meters to return
+                - name: authorization_uid
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter meters by authorization UID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-meter
+              method: GET
+              description: Retrieve a specific utility meter
+              inputParameters:
+                - name: uid
+                  in: path
+                  type: string
+                  required: true
+                  description: Meter unique identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: collect-meter-data
+              method: POST
+              description: Trigger data collection for a utility meter
+              inputParameters:
+                - name: uid
+                  in: path
+                  type: string
+                  required: true
+                  description: Meter unique identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: monitor-meter-data
+              method: POST
+              description: Enable ongoing monitoring for a utility meter
+              inputParameters:
+                - name: uid
+                  in: path
+                  type: string
+                  required: true
+                  description: Meter unique identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: bills
+          path: /bills
+          description: Utility billing information
+          operations:
+            - name: list-bills
+              method: GET
+              description: List all utility bills for authorized meters
+              inputParameters:
+                - name: meter_uid
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter bills by meter UID
+                - name: start
+                  in: query
+                  type: string
+                  required: false
+                  description: Start date filter (ISO 8601)
+                - name: end
+                  in: query
+                  type: string
+                  required: false
+                  description: End date filter (ISO 8601)
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: Maximum number of bills to return
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: intervals
+          path: /intervals
+          description: Meter usage intervals
+          operations:
+            - name: list-intervals
+              method: GET
+              description: List meter usage intervals for authorized meters
+              inputParameters:
+                - name: meter_uid
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter intervals by meter UID
+                - name: start
+                  in: query
+                  type: string
+                  required: false
+                  description: Start datetime filter (ISO 8601)
+                - name: end
+                  in: query
+                  type: string
+                  required: false
+                  description: End datetime filter (ISO 8601)
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: Maximum number of intervals to return
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: authorizations
+          path: /authorizations
+          description: Customer authorizations for utility data access
+          operations:
+            - name: list-authorizations
+              method: GET
+              description: List all submitted authorizations
+              inputParameters:
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by authorization status
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: Maximum number of authorizations to return
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-authorization
+              method: GET
+              description: Retrieve a specific authorization
+              inputParameters:
+                - name: uid
+                  in: path
+                  type: string
+                  required: true
+                  description: Authorization unique identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: revoke-authorization
+              method: POST
+              description: Revoke a customer authorization
+              inputParameters:
+                - name: uid
+                  in: path
+                  type: string
+                  required: true
+                  description: Authorization unique identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: events
+          path: /events
+          description: Webhook events and notifications
+          operations:
+            - name: list-events
+              method: GET
+              description: List webhook events for the authenticated account
+              inputParameters:
+                - name: type
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by event type
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: Maximum number of events to return
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-event
+              method: GET
+              description: Retrieve a specific webhook event
+              inputParameters:
+                - name: uid
+                  in: path
+                  type: string
+                  required: true
+                  description: Event unique identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: billing-accounts
+          path: /accounting/billing-accounts
+          description: Customer billing accounts
+          operations:
+            - name: list-billing-accounts
+              method: GET
+              description: List all customer billing accounts
+              inputParameters:
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: Maximum number of accounts to return
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-billing-account
+              method: GET
+              description: Retrieve a specific billing account
+              inputParameters:
+                - name: uid
+                  in: path
+                  type: string
+                  required: true
+                  description: Billing account unique identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: billing-summaries
+          path: /accounting/billing-summaries
+          description: Billing summaries for customer accounts
+          operations:
+            - name: list-billing-summaries
+              method: GET
+              description: List billing summaries for customer accounts
+              inputParameters:
+                - name: billing_account_uid
+                  in: query
+                  type: string
+                  required: false
+                  description: Filter by billing account UID
+                - name: limit
+                  in: query
+                  type: integer
+                  required: false
+                  description: Maximum number of summaries to return
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-billing-summary
+              method: GET
+              description: Retrieve a specific billing summary
+              inputParameters:
+                - name: uid
+                  in: path
+                  type: string
+                  required: true
+                  description: Billing summary unique identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: utilityapi-rest
+      resources:
+        - path: /v1/meters
+          name: meters
+          description: Utility meter management
+          operations:
+            - method: GET
+              name: list-meters
+              description: List utility meters
+              call: "utilityapi.list-meters"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/bills
+          name: bills
+          description: Utility bills
+          operations:
+            - method: GET
+              name: list-bills
+              description: List utility bills
+              call: "utilityapi.list-bills"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/intervals
+          name: intervals
+          description: Meter usage intervals
+          operations:
+            - method: GET
+              name: list-intervals
+              description: List meter usage intervals
+              call: "utilityapi.list-intervals"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: utilityapi-mcp
+      transport: http
+      tools:
+        - name: list-meters
+          description: List utility meters for authorized customers
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-meters"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-bills
+          description: List utility billing information
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-bills"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-intervals
+          description: List meter usage interval data
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "utilityapi.list-intervals"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,84 @@
+extends:
+  - spectral:oas
+rules:
+  utilityapi-bearer-auth-required:
+    description: All operations must use bearerAuth security
+    message: Operation must use bearerAuth security scheme
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            security:
+              type: array
+          required:
+            - security
+
+  utilityapi-uid-path-parameters:
+    description: Path parameters for resource IDs should be named 'uid'
+    message: Resource identifier path parameters should be named 'uid'
+    severity: warn
+    given: "$.paths[*][*].parameters[*]"
+    then:
+      function: pattern
+      field: name
+      functionOptions:
+        match: "^(uid|username|name|provider|architecture|version)$"
+
+  utilityapi-pagination-next-cursor:
+    description: List endpoints should support 'next' cursor pagination
+    message: List operations should include 'next' cursor parameter
+    severity: warn
+    given: "$.paths[*].get"
+    then:
+      function: truthy
+      field: parameters
+
+  utilityapi-list-response-envelope:
+    description: List responses should use plural noun envelope
+    message: List responses should wrap items in a plural noun envelope
+    severity: warn
+    given: "$.paths[*].get.responses.200.content.application/json.schema"
+    then:
+      function: truthy
+      field: properties
+
+  utilityapi-operations-must-have-summaries:
+    description: All operations must have a summary
+    message: Operations must have a summary field
+    severity: error
+    given: "$.paths[*][get,post,put,delete,patch]"
+    then:
+      function: truthy
+      field: summary
+
+  utilityapi-operations-must-have-tags:
+    description: All operations must have at least one tag
+    message: Operations should be tagged for organization
+    severity: warn
+    given: "$.paths[*][get,post,put,delete,patch]"
+    then:
+      function: truthy
+      field: tags
+
+  utilityapi-error-response-defined:
+    description: Operations should define 401 error responses
+    message: Operations should document 401 Unauthorized responses
+    severity: warn
+    given: "$.paths[*][get,post,put,delete,patch].responses"
+    then:
+      function: truthy
+      field: '401'
+
+  utilityapi-operation-ids-camel-case:
+    description: Operation IDs should use camelCase
+    message: OperationId should use camelCase naming
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
