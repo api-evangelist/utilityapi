@@ -1,0 +1,83 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UtilityAPI — Files
+  description: 'UtilityAPI — Files. 1 operations. Lead operation: List Files. Self-contained Naftiko capability covering one
+    Utilityapi business surface.'
+  tags:
+  - Utilityapi
+  - Files
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UTILITYAPI_API_KEY: UTILITYAPI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: utilityapi-files
+    baseUri: https://utilityapi.com/api/v2
+    description: UtilityAPI — Files business capability. Self-contained, no shared references.
+    resources:
+    - name: files
+      path: /files
+      operations:
+      - name: listfiles
+        method: GET
+        description: List Files
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: next
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.UTILITYAPI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: utilityapi-files-rest
+    port: 8080
+    description: REST adapter for UtilityAPI — Files. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/files
+      name: files
+      description: REST surface for files.
+      operations:
+      - method: GET
+        name: listfiles
+        description: List Files
+        call: utilityapi-files.listfiles
+        with:
+          limit: rest.limit
+          next: rest.next
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: utilityapi-files-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UtilityAPI — Files. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-files
+      description: List Files
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-files.listfiles
+      with:
+        limit: tools.limit
+        next: tools.next
+      outputParameters:
+      - type: object
+        mapping: $.

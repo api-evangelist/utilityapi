@@ -1,0 +1,101 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UtilityAPI — Intervals
+  description: 'UtilityAPI — Intervals. 1 operations. Lead operation: List Intervals. Self-contained Naftiko capability covering
+    one Utilityapi business surface.'
+  tags:
+  - Utilityapi
+  - Intervals
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UTILITYAPI_API_KEY: UTILITYAPI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: utilityapi-intervals
+    baseUri: https://utilityapi.com/api/v2
+    description: UtilityAPI — Intervals business capability. Self-contained, no shared references.
+    resources:
+    - name: intervals
+      path: /intervals
+      operations:
+      - name: listintervals
+        method: GET
+        description: List Intervals
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: next
+          in: query
+          type: string
+        - name: meter_uid
+          in: query
+          type: string
+          description: Filter intervals by meter UID
+        - name: start
+          in: query
+          type: string
+          description: Start datetime filter (ISO 8601)
+        - name: end
+          in: query
+          type: string
+          description: End datetime filter (ISO 8601)
+    authentication:
+      type: bearer
+      token: '{{env.UTILITYAPI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: utilityapi-intervals-rest
+    port: 8080
+    description: REST adapter for UtilityAPI — Intervals. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/intervals
+      name: intervals
+      description: REST surface for intervals.
+      operations:
+      - method: GET
+        name: listintervals
+        description: List Intervals
+        call: utilityapi-intervals.listintervals
+        with:
+          limit: rest.limit
+          next: rest.next
+          meter_uid: rest.meter_uid
+          start: rest.start
+          end: rest.end
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: utilityapi-intervals-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UtilityAPI — Intervals. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-intervals
+      description: List Intervals
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-intervals.listintervals
+      with:
+        limit: tools.limit
+        next: tools.next
+        meter_uid: tools.meter_uid
+        start: tools.start
+        end: tools.end
+      outputParameters:
+      - type: object
+        mapping: $.

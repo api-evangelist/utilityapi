@@ -1,0 +1,198 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UtilityAPI — Accounting
+  description: 'UtilityAPI — Accounting. 4 operations. Lead operation: List Billing Accounts. Self-contained Naftiko capability
+    covering one Utilityapi business surface.'
+  tags:
+  - Utilityapi
+  - Accounting
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UTILITYAPI_API_KEY: UTILITYAPI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: utilityapi-accounting
+    baseUri: https://utilityapi.com/api/v2
+    description: UtilityAPI — Accounting business capability. Self-contained, no shared references.
+    resources:
+    - name: accounting-billing-accounts
+      path: /accounting/billing-accounts
+      operations:
+      - name: listbillingaccounts
+        method: GET
+        description: List Billing Accounts
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: next
+          in: query
+          type: string
+    - name: accounting-billing-accounts-uid
+      path: /accounting/billing-accounts/{uid}
+      operations:
+      - name: getbillingaccount
+        method: GET
+        description: Get Billing Account
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: accounting-billing-summaries
+      path: /accounting/billing-summaries
+      operations:
+      - name: listbillingsummaries
+        method: GET
+        description: List Billing Summaries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: next
+          in: query
+          type: string
+        - name: billing_account_uid
+          in: query
+          type: string
+          description: Filter by billing account UID
+    - name: accounting-billing-summaries-uid
+      path: /accounting/billing-summaries/{uid}
+      operations:
+      - name: getbillingsummary
+        method: GET
+        description: Get Billing Summary
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.UTILITYAPI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: utilityapi-accounting-rest
+    port: 8080
+    description: REST adapter for UtilityAPI — Accounting. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/accounting/billing-accounts
+      name: accounting-billing-accounts
+      description: REST surface for accounting-billing-accounts.
+      operations:
+      - method: GET
+        name: listbillingaccounts
+        description: List Billing Accounts
+        call: utilityapi-accounting.listbillingaccounts
+        with:
+          limit: rest.limit
+          next: rest.next
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounting/billing-accounts/{uid}
+      name: accounting-billing-accounts-uid
+      description: REST surface for accounting-billing-accounts-uid.
+      operations:
+      - method: GET
+        name: getbillingaccount
+        description: Get Billing Account
+        call: utilityapi-accounting.getbillingaccount
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounting/billing-summaries
+      name: accounting-billing-summaries
+      description: REST surface for accounting-billing-summaries.
+      operations:
+      - method: GET
+        name: listbillingsummaries
+        description: List Billing Summaries
+        call: utilityapi-accounting.listbillingsummaries
+        with:
+          limit: rest.limit
+          next: rest.next
+          billing_account_uid: rest.billing_account_uid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounting/billing-summaries/{uid}
+      name: accounting-billing-summaries-uid
+      description: REST surface for accounting-billing-summaries-uid.
+      operations:
+      - method: GET
+        name: getbillingsummary
+        description: Get Billing Summary
+        call: utilityapi-accounting.getbillingsummary
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: utilityapi-accounting-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UtilityAPI — Accounting. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-billing-accounts
+      description: List Billing Accounts
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-accounting.listbillingaccounts
+      with:
+        limit: tools.limit
+        next: tools.next
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-billing-account
+      description: Get Billing Account
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-accounting.getbillingaccount
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-billing-summaries
+      description: List Billing Summaries
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-accounting.listbillingsummaries
+      with:
+        limit: tools.limit
+        next: tools.next
+        billing_account_uid: tools.billing_account_uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-billing-summary
+      description: Get Billing Summary
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-accounting.getbillingsummary
+      outputParameters:
+      - type: object
+        mapping: $.

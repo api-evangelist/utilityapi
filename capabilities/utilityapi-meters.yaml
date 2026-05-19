@@ -1,0 +1,220 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UtilityAPI — Meters
+  description: 'UtilityAPI — Meters. 5 operations. Lead operation: List Meters. Self-contained Naftiko capability covering
+    one Utilityapi business surface.'
+  tags:
+  - Utilityapi
+  - Meters
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UTILITYAPI_API_KEY: UTILITYAPI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: utilityapi-meters
+    baseUri: https://utilityapi.com/api/v2
+    description: UtilityAPI — Meters business capability. Self-contained, no shared references.
+    resources:
+    - name: meters
+      path: /meters
+      operations:
+      - name: listmeters
+        method: GET
+        description: List Meters
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: next
+          in: query
+          type: string
+        - name: authorization_uid
+          in: query
+          type: string
+          description: Filter meters by authorization UID
+    - name: meters-uid
+      path: /meters/{uid}
+      operations:
+      - name: getmeter
+        method: GET
+        description: Get Meter
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: modifymeter
+        method: PUT
+        description: Modify Meter
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: meters-uid-collect
+      path: /meters/{uid}/collect
+      operations:
+      - name: collectmeterdata
+        method: POST
+        description: Collect Meter Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: meters-uid-monitor
+      path: /meters/{uid}/monitor
+      operations:
+      - name: monitormeterdata
+        method: POST
+        description: Monitor Meter Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.UTILITYAPI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: utilityapi-meters-rest
+    port: 8080
+    description: REST adapter for UtilityAPI — Meters. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/meters
+      name: meters
+      description: REST surface for meters.
+      operations:
+      - method: GET
+        name: listmeters
+        description: List Meters
+        call: utilityapi-meters.listmeters
+        with:
+          limit: rest.limit
+          next: rest.next
+          authorization_uid: rest.authorization_uid
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/meters/{uid}
+      name: meters-uid
+      description: REST surface for meters-uid.
+      operations:
+      - method: GET
+        name: getmeter
+        description: Get Meter
+        call: utilityapi-meters.getmeter
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: modifymeter
+        description: Modify Meter
+        call: utilityapi-meters.modifymeter
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/meters/{uid}/collect
+      name: meters-uid-collect
+      description: REST surface for meters-uid-collect.
+      operations:
+      - method: POST
+        name: collectmeterdata
+        description: Collect Meter Data
+        call: utilityapi-meters.collectmeterdata
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/meters/{uid}/monitor
+      name: meters-uid-monitor
+      description: REST surface for meters-uid-monitor.
+      operations:
+      - method: POST
+        name: monitormeterdata
+        description: Monitor Meter Data
+        call: utilityapi-meters.monitormeterdata
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: utilityapi-meters-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UtilityAPI — Meters. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-meters
+      description: List Meters
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-meters.listmeters
+      with:
+        limit: tools.limit
+        next: tools.next
+        authorization_uid: tools.authorization_uid
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-meter
+      description: Get Meter
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-meters.getmeter
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: modify-meter
+      description: Modify Meter
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: utilityapi-meters.modifymeter
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: collect-meter-data
+      description: Collect Meter Data
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: utilityapi-meters.collectmeterdata
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: monitor-meter-data
+      description: Monitor Meter Data
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: utilityapi-meters.monitormeterdata
+      outputParameters:
+      - type: object
+        mapping: $.

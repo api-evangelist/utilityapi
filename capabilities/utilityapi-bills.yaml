@@ -1,0 +1,101 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UtilityAPI — Bills
+  description: 'UtilityAPI — Bills. 1 operations. Lead operation: List Bills. Self-contained Naftiko capability covering one
+    Utilityapi business surface.'
+  tags:
+  - Utilityapi
+  - Bills
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UTILITYAPI_API_KEY: UTILITYAPI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: utilityapi-bills
+    baseUri: https://utilityapi.com/api/v2
+    description: UtilityAPI — Bills business capability. Self-contained, no shared references.
+    resources:
+    - name: bills
+      path: /bills
+      operations:
+      - name: listbills
+        method: GET
+        description: List Bills
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: next
+          in: query
+          type: string
+        - name: meter_uid
+          in: query
+          type: string
+          description: Filter bills by meter UID
+        - name: start
+          in: query
+          type: string
+          description: Start date filter (ISO 8601)
+        - name: end
+          in: query
+          type: string
+          description: End date filter (ISO 8601)
+    authentication:
+      type: bearer
+      token: '{{env.UTILITYAPI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: utilityapi-bills-rest
+    port: 8080
+    description: REST adapter for UtilityAPI — Bills. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/bills
+      name: bills
+      description: REST surface for bills.
+      operations:
+      - method: GET
+        name: listbills
+        description: List Bills
+        call: utilityapi-bills.listbills
+        with:
+          limit: rest.limit
+          next: rest.next
+          meter_uid: rest.meter_uid
+          start: rest.start
+          end: rest.end
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: utilityapi-bills-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UtilityAPI — Bills. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-bills
+      description: List Bills
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-bills.listbills
+      with:
+        limit: tools.limit
+        next: tools.next
+        meter_uid: tools.meter_uid
+        start: tools.start
+        end: tools.end
+      outputParameters:
+      - type: object
+        mapping: $.

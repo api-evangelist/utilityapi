@@ -1,0 +1,212 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UtilityAPI — Authorizations
+  description: 'UtilityAPI — Authorizations. 5 operations. Lead operation: List Authorizations. Self-contained Naftiko capability
+    covering one Utilityapi business surface.'
+  tags:
+  - Utilityapi
+  - Authorizations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UTILITYAPI_API_KEY: UTILITYAPI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: utilityapi-authorizations
+    baseUri: https://utilityapi.com/api/v2
+    description: UtilityAPI — Authorizations business capability. Self-contained, no shared references.
+    resources:
+    - name: authorizations
+      path: /authorizations
+      operations:
+      - name: listauthorizations
+        method: GET
+        description: List Authorizations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: next
+          in: query
+          type: string
+        - name: status
+          in: query
+          type: string
+    - name: authorizations-uid
+      path: /authorizations/{uid}
+      operations:
+      - name: getauthorization
+        method: GET
+        description: Get Authorization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: modifyauthorization
+        method: PUT
+        description: Modify Authorization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteauthorization
+        method: DELETE
+        description: Delete Authorization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: authorizations-uid-revoke
+      path: /authorizations/{uid}/revoke
+      operations:
+      - name: revokeauthorization
+        method: POST
+        description: Revoke Authorization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.UTILITYAPI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: utilityapi-authorizations-rest
+    port: 8080
+    description: REST adapter for UtilityAPI — Authorizations. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/authorizations
+      name: authorizations
+      description: REST surface for authorizations.
+      operations:
+      - method: GET
+        name: listauthorizations
+        description: List Authorizations
+        call: utilityapi-authorizations.listauthorizations
+        with:
+          limit: rest.limit
+          next: rest.next
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/authorizations/{uid}
+      name: authorizations-uid
+      description: REST surface for authorizations-uid.
+      operations:
+      - method: GET
+        name: getauthorization
+        description: Get Authorization
+        call: utilityapi-authorizations.getauthorization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: modifyauthorization
+        description: Modify Authorization
+        call: utilityapi-authorizations.modifyauthorization
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteauthorization
+        description: Delete Authorization
+        call: utilityapi-authorizations.deleteauthorization
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/authorizations/{uid}/revoke
+      name: authorizations-uid-revoke
+      description: REST surface for authorizations-uid-revoke.
+      operations:
+      - method: POST
+        name: revokeauthorization
+        description: Revoke Authorization
+        call: utilityapi-authorizations.revokeauthorization
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: utilityapi-authorizations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UtilityAPI — Authorizations. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: list-authorizations
+      description: List Authorizations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-authorizations.listauthorizations
+      with:
+        limit: tools.limit
+        next: tools.next
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-authorization
+      description: Get Authorization
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-authorizations.getauthorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: modify-authorization
+      description: Modify Authorization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: utilityapi-authorizations.modifyauthorization
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-authorization
+      description: Delete Authorization
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: utilityapi-authorizations.deleteauthorization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-authorization
+      description: Revoke Authorization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: utilityapi-authorizations.revokeauthorization
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,210 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: UtilityAPI — Forms
+  description: 'UtilityAPI — Forms. 5 operations. Lead operation: List Forms. Self-contained Naftiko capability covering one
+    Utilityapi business surface.'
+  tags:
+  - Utilityapi
+  - Forms
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UTILITYAPI_API_KEY: UTILITYAPI_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: utilityapi-forms
+    baseUri: https://utilityapi.com/api/v2
+    description: UtilityAPI — Forms business capability. Self-contained, no shared references.
+    resources:
+    - name: forms
+      path: /forms
+      operations:
+      - name: listforms
+        method: GET
+        description: List Forms
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: limit
+          in: query
+          type: integer
+        - name: next
+          in: query
+          type: string
+      - name: createform
+        method: POST
+        description: Create Form
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: forms-uid
+      path: /forms/{uid}
+      operations:
+      - name: getform
+        method: GET
+        description: Get Form
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: modifyform
+        method: PUT
+        description: Modify Form
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteform
+        method: DELETE
+        description: Delete Form
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.UTILITYAPI_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: utilityapi-forms-rest
+    port: 8080
+    description: REST adapter for UtilityAPI — Forms. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/forms
+      name: forms
+      description: REST surface for forms.
+      operations:
+      - method: GET
+        name: listforms
+        description: List Forms
+        call: utilityapi-forms.listforms
+        with:
+          limit: rest.limit
+          next: rest.next
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createform
+        description: Create Form
+        call: utilityapi-forms.createform
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/forms/{uid}
+      name: forms-uid
+      description: REST surface for forms-uid.
+      operations:
+      - method: GET
+        name: getform
+        description: Get Form
+        call: utilityapi-forms.getform
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: modifyform
+        description: Modify Form
+        call: utilityapi-forms.modifyform
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteform
+        description: Delete Form
+        call: utilityapi-forms.deleteform
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: utilityapi-forms-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for UtilityAPI — Forms. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-forms
+      description: List Forms
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-forms.listforms
+      with:
+        limit: tools.limit
+        next: tools.next
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-form
+      description: Create Form
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: utilityapi-forms.createform
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-form
+      description: Get Form
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: utilityapi-forms.getform
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: modify-form
+      description: Modify Form
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: utilityapi-forms.modifyform
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-form
+      description: Delete Form
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: utilityapi-forms.deleteform
+      outputParameters:
+      - type: object
+        mapping: $.
