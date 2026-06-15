@@ -1,0 +1,714 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UtilityAPI",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/templates",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of templates to return"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query",
+                "description": "Cursor for pagination"
+              }
+            ]
+          },
+          "docs": "List all authorization form templates for the authenticated account."
+        },
+        {
+          "info": {
+            "name": "Get Template",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/templates/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific authorization form template by UID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Forms",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Forms",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/forms",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all authorization forms for the authenticated account."
+        },
+        {
+          "info": {
+            "name": "Create Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://utilityapi.com/api/v2/forms",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new authorization form for collecting customer utility data permissions."
+        },
+        {
+          "info": {
+            "name": "Get Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/forms/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific authorization form by UID."
+        },
+        {
+          "info": {
+            "name": "Modify Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://utilityapi.com/api/v2/forms/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing authorization form."
+        },
+        {
+          "info": {
+            "name": "Delete Form",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://utilityapi.com/api/v2/forms/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Delete an authorization form."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Authorizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Authorizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/authorizations",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all submitted authorizations for the authenticated account."
+        },
+        {
+          "info": {
+            "name": "Get Authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/authorizations/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific authorization by UID."
+        },
+        {
+          "info": {
+            "name": "Modify Authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://utilityapi.com/api/v2/authorizations/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update metadata on an existing authorization."
+        },
+        {
+          "info": {
+            "name": "Delete Authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://utilityapi.com/api/v2/authorizations/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Delete an authorization and associated data."
+        },
+        {
+          "info": {
+            "name": "Revoke Authorization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://utilityapi.com/api/v2/authorizations/:uid/revoke",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Revoke a customer's authorization to access their utility data."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Meters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Meters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/meters",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "authorization_uid",
+                "value": "",
+                "type": "query",
+                "description": "Filter meters by authorization UID"
+              }
+            ]
+          },
+          "docs": "List all utility meters for authorized customers."
+        },
+        {
+          "info": {
+            "name": "Get Meter",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/meters/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific utility meter by UID."
+        },
+        {
+          "info": {
+            "name": "Modify Meter",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://utilityapi.com/api/v2/meters/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update metadata on a meter."
+        },
+        {
+          "info": {
+            "name": "Collect Meter Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://utilityapi.com/api/v2/meters/:uid/collect",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Trigger data collection for a utility meter."
+        },
+        {
+          "info": {
+            "name": "Monitor Meter Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://utilityapi.com/api/v2/meters/:uid/monitor",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Enable ongoing monitoring for a utility meter to receive automatic data updates."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/bills",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "meter_uid",
+                "value": "",
+                "type": "query",
+                "description": "Filter bills by meter UID"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Start date filter (ISO 8601)"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "End date filter (ISO 8601)"
+              }
+            ]
+          },
+          "docs": "List all utility bills for authorized meters."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Intervals",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Intervals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/intervals",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "meter_uid",
+                "value": "",
+                "type": "query",
+                "description": "Filter intervals by meter UID"
+              },
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Start datetime filter (ISO 8601)"
+              },
+              {
+                "name": "end",
+                "value": "",
+                "type": "query",
+                "description": "End datetime filter (ISO 8601)"
+              }
+            ]
+          },
+          "docs": "List meter usage intervals for authorized meters."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/files",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List data files (raw or formatted) linked to other API objects."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/events",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter by event type"
+              }
+            ]
+          },
+          "docs": "List webhook events for the authenticated account."
+        },
+        {
+          "info": {
+            "name": "Get Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/events/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific webhook event by UID."
+        },
+        {
+          "info": {
+            "name": "Modify Event",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://utilityapi.com/api/v2/events/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update metadata on an event."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Accounting",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Billing Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/accounting/billing-accounts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all customer billing accounts."
+        },
+        {
+          "info": {
+            "name": "Get Billing Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/accounting/billing-accounts/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific billing account by UID."
+        },
+        {
+          "info": {
+            "name": "List Billing Summaries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/accounting/billing-summaries",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "billing_account_uid",
+                "value": "",
+                "type": "query",
+                "description": "Filter by billing account UID"
+              }
+            ]
+          },
+          "docs": "List billing summaries for customer accounts."
+        },
+        {
+          "info": {
+            "name": "Get Billing Summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/accounting/billing-summaries/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific billing summary by UID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
