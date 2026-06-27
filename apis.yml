@@ -93,7 +93,7 @@ common:
     url: https://utilityapi.com/
   - type: Documentation
     url: https://utilityapi.com/docs
-  - type: SignUp
+  - type: Signup
     url: https://utilityapi.com/register
   - type: Pricing
     url: https://utilityapi.com/pricing
