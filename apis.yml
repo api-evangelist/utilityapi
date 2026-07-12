@@ -85,6 +85,10 @@ apis:
       - name: Energy Data Platform
         description: Comprehensive utility data collection and standardization platform
 common:
+  - type: DomainSecurity
+    url: security/utilityapi-domain-security.yml
+  - type: Authentication
+    url: authentication/utilityapi-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/utilityapi
   - type: LinkedIn
@@ -101,6 +105,8 @@ common:
     url: https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/openapi/utilityapi-openapi.yml
   - type: Vocabulary
     url: https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/vocabulary/utilityapi-vocabulary.yml
+  - url: https://utilityapi.com/blog
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
