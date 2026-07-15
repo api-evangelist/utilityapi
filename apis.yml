@@ -85,6 +85,8 @@ apis:
       - name: Energy Data Platform
         description: Comprehensive utility data collection and standardization platform
 common:
+  - type: AgenticAccess
+    url: agentic-access/utilityapi-agentic-access.yml
   - type: DomainSecurity
     url: security/utilityapi-domain-security.yml
   - type: Authentication
