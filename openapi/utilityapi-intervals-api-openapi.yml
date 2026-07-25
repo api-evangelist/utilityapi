@@ -1,0 +1,119 @@
+openapi: 3.1.0
+info:
+  title: Utility Accounting Intervals API
+  description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
+  version: '2'
+  contact:
+    name: UtilityAPI Support
+    url: https://utilityapi.com/contact
+  termsOfService: https://utilityapi.com/terms
+servers:
+- url: https://utilityapi.com/api/v2
+  description: UtilityAPI Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Intervals
+  description: Meter usage intervals
+paths:
+  /intervals:
+    get:
+      operationId: listIntervals
+      summary: List Intervals
+      description: List meter usage intervals for authorized meters.
+      tags:
+      - Intervals
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: next
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: meter_uid
+        in: query
+        description: Filter intervals by meter UID
+        required: false
+        schema:
+          type: string
+      - name: start
+        in: query
+        description: Start datetime filter (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: end
+        in: query
+        description: End datetime filter (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: List of intervals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntervalList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  responses:
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    IntervalList:
+      type: object
+      properties:
+        intervals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Interval'
+        next:
+          type: string
+    Interval:
+      type: object
+      properties:
+        uid:
+          type: string
+        meter_uid:
+          type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        kwh:
+          type: number
+        created:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from the UtilityAPI dashboard
+externalDocs:
+  description: UtilityAPI Documentation
+  url: https://utilityapi.com/docs

@@ -1,0 +1,124 @@
+openapi: 3.1.0
+info:
+  title: Utility Accounting Bills API
+  description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
+  version: '2'
+  contact:
+    name: UtilityAPI Support
+    url: https://utilityapi.com/contact
+  termsOfService: https://utilityapi.com/terms
+servers:
+- url: https://utilityapi.com/api/v2
+  description: UtilityAPI Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Bills
+  description: Utility billing information
+paths:
+  /bills:
+    get:
+      operationId: listBills
+      summary: List Bills
+      description: List all utility bills for authorized meters.
+      tags:
+      - Bills
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: next
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: meter_uid
+        in: query
+        description: Filter bills by meter UID
+        required: false
+        schema:
+          type: string
+      - name: start
+        in: query
+        description: Start date filter (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: end
+        in: query
+        description: End date filter (ISO 8601)
+        required: false
+        schema:
+          type: string
+          format: date
+      responses:
+        '200':
+          description: List of bills
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    Bill:
+      type: object
+      properties:
+        uid:
+          type: string
+        meter_uid:
+          type: string
+        statement_date:
+          type: string
+          format: date
+        due_date:
+          type: string
+          format: date
+        total_kwh:
+          type: number
+        total_amount:
+          type: number
+        currency:
+          type: string
+          default: USD
+        created:
+          type: string
+          format: date-time
+    BillList:
+      type: object
+      properties:
+        bills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bill'
+        next:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from the UtilityAPI dashboard
+externalDocs:
+  description: UtilityAPI Documentation
+  url: https://utilityapi.com/docs

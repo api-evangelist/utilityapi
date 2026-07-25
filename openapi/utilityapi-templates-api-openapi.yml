@@ -1,0 +1,147 @@
+openapi: 3.1.0
+info:
+  title: Utility Accounting Templates API
+  description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
+  version: '2'
+  contact:
+    name: UtilityAPI Support
+    url: https://utilityapi.com/contact
+  termsOfService: https://utilityapi.com/terms
+servers:
+- url: https://utilityapi.com/api/v2
+  description: UtilityAPI Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Templates
+  description: Authorization form templates for formatting customer authorization forms
+paths:
+  /templates:
+    get:
+      operationId: listTemplates
+      summary: List Templates
+      description: List all authorization form templates for the authenticated account.
+      tags:
+      - Templates
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of templates to return
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: next
+        in: query
+        description: Cursor for pagination
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of templates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /templates/{uid}:
+    get:
+      operationId: getTemplate
+      summary: Get Template
+      description: Retrieve a specific authorization form template by UID.
+      tags:
+      - Templates
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Template details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    Template:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: Unique identifier
+        name:
+          type: string
+          description: Template name
+        description:
+          type: string
+          description: Template description
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              required:
+                type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    TemplateList:
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Template'
+        next:
+          type: string
+          description: Pagination cursor
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from the UtilityAPI dashboard
+externalDocs:
+  description: UtilityAPI Documentation
+  url: https://utilityapi.com/docs

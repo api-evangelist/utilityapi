@@ -1,0 +1,217 @@
+openapi: 3.1.0
+info:
+  title: Utility Accounting API
+  description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
+  version: '2'
+  contact:
+    name: UtilityAPI Support
+    url: https://utilityapi.com/contact
+  termsOfService: https://utilityapi.com/terms
+servers:
+- url: https://utilityapi.com/api/v2
+  description: UtilityAPI Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Accounting
+  description: Customer billing accounts and billing summaries
+paths:
+  /accounting/billing-accounts:
+    get:
+      operationId: listBillingAccounts
+      summary: List Billing Accounts
+      description: List all customer billing accounts.
+      tags:
+      - Accounting
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: next
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of billing accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingAccountList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /accounting/billing-accounts/{uid}:
+    get:
+      operationId: getBillingAccount
+      summary: Get Billing Account
+      description: Retrieve a specific billing account by UID.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Billing account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingAccount'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /accounting/billing-summaries:
+    get:
+      operationId: listBillingSummaries
+      summary: List Billing Summaries
+      description: List billing summaries for customer accounts.
+      tags:
+      - Accounting
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: next
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: billing_account_uid
+        in: query
+        description: Filter by billing account UID
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of billing summaries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingSummaryList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /accounting/billing-summaries/{uid}:
+    get:
+      operationId: getBillingSummary
+      summary: Get Billing Summary
+      description: Retrieve a specific billing summary by UID.
+      tags:
+      - Accounting
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Billing summary details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingSummary'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    BillingAccountList:
+      type: object
+      properties:
+        billing_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingAccount'
+        next:
+          type: string
+    BillingAccount:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        utility:
+          type: string
+        account_number:
+          type: string
+        status:
+          type: string
+        created:
+          type: string
+          format: date-time
+    BillingSummaryList:
+      type: object
+      properties:
+        billing_summaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingSummary'
+        next:
+          type: string
+    BillingSummary:
+      type: object
+      properties:
+        uid:
+          type: string
+        billing_account_uid:
+          type: string
+        period_start:
+          type: string
+          format: date
+        period_end:
+          type: string
+          format: date
+        total_amount:
+          type: number
+        total_kwh:
+          type: number
+        currency:
+          type: string
+          default: USD
+        created:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from the UtilityAPI dashboard
+externalDocs:
+  description: UtilityAPI Documentation
+  url: https://utilityapi.com/docs

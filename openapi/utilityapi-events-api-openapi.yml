@@ -1,0 +1,168 @@
+openapi: 3.1.0
+info:
+  title: Utility Accounting Events API
+  description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
+  version: '2'
+  contact:
+    name: UtilityAPI Support
+    url: https://utilityapi.com/contact
+  termsOfService: https://utilityapi.com/terms
+servers:
+- url: https://utilityapi.com/api/v2
+  description: UtilityAPI Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Events
+  description: Webhook events and notifications
+paths:
+  /events:
+    get:
+      operationId: listEvents
+      summary: List Events
+      description: List webhook events for the authenticated account.
+      tags:
+      - Events
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: next
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Filter by event type
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /events/{uid}:
+    get:
+      operationId: getEvent
+      summary: Get Event
+      description: Retrieve a specific webhook event by UID.
+      tags:
+      - Events
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Event details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: modifyEvent
+      summary: Modify Event
+      description: Update metadata on an event.
+      tags:
+      - Events
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventUpdate'
+      responses:
+        '200':
+          description: Updated event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    EventList:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        next:
+          type: string
+    EventUpdate:
+      type: object
+      properties:
+        metadata:
+          type: object
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    Event:
+      type: object
+      properties:
+        uid:
+          type: string
+        type:
+          type: string
+          description: Event type (e.g., authorization.submitted, meter.data_updated)
+        object_uid:
+          type: string
+        object_type:
+          type: string
+        data:
+          type: object
+        created:
+          type: string
+          format: date-time
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from the UtilityAPI dashboard
+externalDocs:
+  description: UtilityAPI Documentation
+  url: https://utilityapi.com/docs

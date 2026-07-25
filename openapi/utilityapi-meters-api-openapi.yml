@@ -1,0 +1,236 @@
+openapi: 3.1.0
+info:
+  title: Utility Accounting Meters API
+  description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
+  version: '2'
+  contact:
+    name: UtilityAPI Support
+    url: https://utilityapi.com/contact
+  termsOfService: https://utilityapi.com/terms
+servers:
+- url: https://utilityapi.com/api/v2
+  description: UtilityAPI Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Meters
+  description: Utility services and meter data for authorized customers
+paths:
+  /meters:
+    get:
+      operationId: listMeters
+      summary: List Meters
+      description: List all utility meters for authorized customers.
+      tags:
+      - Meters
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: next
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: authorization_uid
+        in: query
+        description: Filter meters by authorization UID
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of meters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /meters/{uid}:
+    get:
+      operationId: getMeter
+      summary: Get Meter
+      description: Retrieve a specific utility meter by UID.
+      tags:
+      - Meters
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Meter details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meter'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: modifyMeter
+      summary: Modify Meter
+      description: Update metadata on a meter.
+      tags:
+      - Meters
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeterUpdate'
+      responses:
+        '200':
+          description: Updated meter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meter'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /meters/{uid}/collect:
+    post:
+      operationId: collectMeterData
+      summary: Collect Meter Data
+      description: Trigger data collection for a utility meter.
+      tags:
+      - Meters
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Collection initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterCollect'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /meters/{uid}/monitor:
+    post:
+      operationId: monitorMeterData
+      summary: Monitor Meter Data
+      description: Enable ongoing monitoring for a utility meter to receive automatic data updates.
+      tags:
+      - Meters
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Monitoring enabled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterMonitor'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    MeterUpdate:
+      type: object
+      properties:
+        metadata:
+          type: object
+    Meter:
+      type: object
+      properties:
+        uid:
+          type: string
+        authorization_uid:
+          type: string
+        utility:
+          type: string
+        service_address:
+          type: string
+        meter_number:
+          type: string
+        service_class:
+          type: string
+          enum:
+          - ELECTRIC
+          - GAS
+          - WATER
+        status:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    MeterMonitor:
+      type: object
+      properties:
+        uid:
+          type: string
+        monitoring:
+          type: boolean
+        message:
+          type: string
+    MeterList:
+      type: object
+      properties:
+        meters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Meter'
+        next:
+          type: string
+    MeterCollect:
+      type: object
+      properties:
+        uid:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from the UtilityAPI dashboard
+externalDocs:
+  description: UtilityAPI Documentation
+  url: https://utilityapi.com/docs

@@ -1,0 +1,96 @@
+openapi: 3.1.0
+info:
+  title: Utility Accounting Files API
+  description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
+  version: '2'
+  contact:
+    name: UtilityAPI Support
+    url: https://utilityapi.com/contact
+  termsOfService: https://utilityapi.com/terms
+servers:
+- url: https://utilityapi.com/api/v2
+  description: UtilityAPI Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Files
+  description: Raw or formatted data files linked to other objects
+paths:
+  /files:
+    get:
+      operationId: listFiles
+      summary: List Files
+      description: List data files (raw or formatted) linked to other API objects.
+      tags:
+      - Files
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: next
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    File:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        content_type:
+          type: string
+        size:
+          type: integer
+        url:
+          type: string
+        created:
+          type: string
+          format: date-time
+    FileList:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        next:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from the UtilityAPI dashboard
+externalDocs:
+  description: UtilityAPI Documentation
+  url: https://utilityapi.com/docs

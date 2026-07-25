@@ -1,0 +1,226 @@
+openapi: 3.1.0
+info:
+  title: Utility Accounting Forms API
+  description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
+  version: '2'
+  contact:
+    name: UtilityAPI Support
+    url: https://utilityapi.com/contact
+  termsOfService: https://utilityapi.com/terms
+servers:
+- url: https://utilityapi.com/api/v2
+  description: UtilityAPI Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Forms
+  description: Customer-facing authorization forms management
+paths:
+  /forms:
+    get:
+      operationId: listForms
+      summary: List Forms
+      description: List all authorization forms for the authenticated account.
+      tags:
+      - Forms
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 100
+      - name: next
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of forms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createForm
+      summary: Create Form
+      description: Create a new authorization form for collecting customer utility data permissions.
+      tags:
+      - Forms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormCreate'
+      responses:
+        '201':
+          description: Form created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /forms/{uid}:
+    get:
+      operationId: getForm
+      summary: Get Form
+      description: Retrieve a specific authorization form by UID.
+      tags:
+      - Forms
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Form details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: modifyForm
+      summary: Modify Form
+      description: Update an existing authorization form.
+      tags:
+      - Forms
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormUpdate'
+      responses:
+        '200':
+          description: Updated form
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteForm
+      summary: Delete Form
+      description: Delete an authorization form.
+      tags:
+      - Forms
+      parameters:
+      - $ref: '#/components/parameters/uid'
+      responses:
+        '204':
+          description: Form deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    FormUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        metadata:
+          type: object
+    FormCreate:
+      type: object
+      required:
+      - template_uid
+      properties:
+        template_uid:
+          type: string
+        name:
+          type: string
+        metadata:
+          type: object
+    Form:
+      type: object
+      properties:
+        uid:
+          type: string
+        template_uid:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - active
+          - expired
+        url:
+          type: string
+          description: URL for customer to complete the form
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    FormList:
+      type: object
+      properties:
+        forms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Form'
+        next:
+          type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from the UtilityAPI dashboard
+externalDocs:
+  description: UtilityAPI Documentation
+  url: https://utilityapi.com/docs
