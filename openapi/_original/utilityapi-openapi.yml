@@ -1,0 +1,1142 @@
+openapi: 3.1.0
+info:
+  title: UtilityAPI
+  description: >-
+    UtilityAPI provides a REST API for collecting, standardizing, and sharing utility
+    data including meters, bills, intervals, authorizations, and webhook events.
+    Supports the Green Button standard for energy data sharing.
+  version: '2'
+  contact:
+    name: UtilityAPI Support
+    url: https://utilityapi.com/contact
+  termsOfService: https://utilityapi.com/terms
+externalDocs:
+  description: UtilityAPI Documentation
+  url: https://utilityapi.com/docs
+servers:
+  - url: https://utilityapi.com/api/v2
+    description: UtilityAPI Production Server
+tags:
+  - name: Templates
+    description: Authorization form templates for formatting customer authorization forms
+  - name: Forms
+    description: Customer-facing authorization forms management
+  - name: Authorizations
+    description: Submitted authorizations from utility customers
+  - name: Meters
+    description: Utility services and meter data for authorized customers
+  - name: Bills
+    description: Utility billing information
+  - name: Intervals
+    description: Meter usage intervals
+  - name: Files
+    description: Raw or formatted data files linked to other objects
+  - name: Events
+    description: Webhook events and notifications
+  - name: Accounting
+    description: Customer billing accounts and billing summaries
+security:
+  - bearerAuth: []
+paths:
+  /templates:
+    get:
+      operationId: listTemplates
+      summary: List Templates
+      description: List all authorization form templates for the authenticated account.
+      tags:
+        - Templates
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of templates to return
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: next
+          in: query
+          description: Cursor for pagination
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of templates
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplateList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /templates/{uid}:
+    get:
+      operationId: getTemplate
+      summary: Get Template
+      description: Retrieve a specific authorization form template by UID.
+      tags:
+        - Templates
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Template details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /forms:
+    get:
+      operationId: listForms
+      summary: List Forms
+      description: List all authorization forms for the authenticated account.
+      tags:
+        - Forms
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of forms
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FormList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createForm
+      summary: Create Form
+      description: Create a new authorization form for collecting customer utility data permissions.
+      tags:
+        - Forms
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormCreate'
+      responses:
+        '201':
+          description: Form created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/ValidationError'
+  /forms/{uid}:
+    get:
+      operationId: getForm
+      summary: Get Form
+      description: Retrieve a specific authorization form by UID.
+      tags:
+        - Forms
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Form details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: modifyForm
+      summary: Modify Form
+      description: Update an existing authorization form.
+      tags:
+        - Forms
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FormUpdate'
+      responses:
+        '200':
+          description: Updated form
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Form'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteForm
+      summary: Delete Form
+      description: Delete an authorization form.
+      tags:
+        - Forms
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '204':
+          description: Form deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /authorizations:
+    get:
+      operationId: listAuthorizations
+      summary: List Authorizations
+      description: List all submitted authorizations for the authenticated account.
+      tags:
+        - Authorizations
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - pending
+              - active
+              - revoked
+      responses:
+        '200':
+          description: List of authorizations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthorizationList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /authorizations/{uid}:
+    get:
+      operationId: getAuthorization
+      summary: Get Authorization
+      description: Retrieve a specific authorization by UID.
+      tags:
+        - Authorizations
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Authorization details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Authorization'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: modifyAuthorization
+      summary: Modify Authorization
+      description: Update metadata on an existing authorization.
+      tags:
+        - Authorizations
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthorizationUpdate'
+      responses:
+        '200':
+          description: Updated authorization
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Authorization'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteAuthorization
+      summary: Delete Authorization
+      description: Delete an authorization and associated data.
+      tags:
+        - Authorizations
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '204':
+          description: Authorization deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /authorizations/{uid}/revoke:
+    post:
+      operationId: revokeAuthorization
+      summary: Revoke Authorization
+      description: Revoke a customer's authorization to access their utility data.
+      tags:
+        - Authorizations
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Authorization revoked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Authorization'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /meters:
+    get:
+      operationId: listMeters
+      summary: List Meters
+      description: List all utility meters for authorized customers.
+      tags:
+        - Meters
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: authorization_uid
+          in: query
+          description: Filter meters by authorization UID
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of meters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /meters/{uid}:
+    get:
+      operationId: getMeter
+      summary: Get Meter
+      description: Retrieve a specific utility meter by UID.
+      tags:
+        - Meters
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Meter details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meter'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: modifyMeter
+      summary: Modify Meter
+      description: Update metadata on a meter.
+      tags:
+        - Meters
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MeterUpdate'
+      responses:
+        '200':
+          description: Updated meter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Meter'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /meters/{uid}/collect:
+    post:
+      operationId: collectMeterData
+      summary: Collect Meter Data
+      description: Trigger data collection for a utility meter.
+      tags:
+        - Meters
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Collection initiated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterCollect'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /meters/{uid}/monitor:
+    post:
+      operationId: monitorMeterData
+      summary: Monitor Meter Data
+      description: Enable ongoing monitoring for a utility meter to receive automatic data updates.
+      tags:
+        - Meters
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Monitoring enabled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MeterMonitor'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /bills:
+    get:
+      operationId: listBills
+      summary: List Bills
+      description: List all utility bills for authorized meters.
+      tags:
+        - Bills
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: meter_uid
+          in: query
+          description: Filter bills by meter UID
+          required: false
+          schema:
+            type: string
+        - name: start
+          in: query
+          description: Start date filter (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: end
+          in: query
+          description: End date filter (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: List of bills
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /intervals:
+    get:
+      operationId: listIntervals
+      summary: List Intervals
+      description: List meter usage intervals for authorized meters.
+      tags:
+        - Intervals
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: meter_uid
+          in: query
+          description: Filter intervals by meter UID
+          required: false
+          schema:
+            type: string
+        - name: start
+          in: query
+          description: Start datetime filter (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: end
+          in: query
+          description: End datetime filter (ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: List of intervals
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntervalList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /files:
+    get:
+      operationId: listFiles
+      summary: List Files
+      description: List data files (raw or formatted) linked to other API objects.
+      tags:
+        - Files
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of files
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /events:
+    get:
+      operationId: listEvents
+      summary: List Events
+      description: List webhook events for the authenticated account.
+      tags:
+        - Events
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Filter by event type
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /events/{uid}:
+    get:
+      operationId: getEvent
+      summary: Get Event
+      description: Retrieve a specific webhook event by UID.
+      tags:
+        - Events
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Event details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: modifyEvent
+      summary: Modify Event
+      description: Update metadata on an event.
+      tags:
+        - Events
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventUpdate'
+      responses:
+        '200':
+          description: Updated event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /accounting/billing-accounts:
+    get:
+      operationId: listBillingAccounts
+      summary: List Billing Accounts
+      description: List all customer billing accounts.
+      tags:
+        - Accounting
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of billing accounts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingAccountList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /accounting/billing-accounts/{uid}:
+    get:
+      operationId: getBillingAccount
+      summary: Get Billing Account
+      description: Retrieve a specific billing account by UID.
+      tags:
+        - Accounting
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Billing account details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingAccount'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /accounting/billing-summaries:
+    get:
+      operationId: listBillingSummaries
+      summary: List Billing Summaries
+      description: List billing summaries for customer accounts.
+      tags:
+        - Accounting
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 100
+        - name: next
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: billing_account_uid
+          in: query
+          description: Filter by billing account UID
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of billing summaries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingSummaryList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /accounting/billing-summaries/{uid}:
+    get:
+      operationId: getBillingSummary
+      summary: Get Billing Summary
+      description: Retrieve a specific billing summary by UID.
+      tags:
+        - Accounting
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: Billing summary details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BillingSummary'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: API token from the UtilityAPI dashboard
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    Template:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: Unique identifier
+        name:
+          type: string
+          description: Template name
+        description:
+          type: string
+          description: Template description
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              type:
+                type: string
+              required:
+                type: boolean
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    TemplateList:
+      type: object
+      properties:
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/Template'
+        next:
+          type: string
+          description: Pagination cursor
+    Form:
+      type: object
+      properties:
+        uid:
+          type: string
+        template_uid:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+            - pending
+            - active
+            - expired
+        url:
+          type: string
+          description: URL for customer to complete the form
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    FormCreate:
+      type: object
+      required:
+        - template_uid
+      properties:
+        template_uid:
+          type: string
+        name:
+          type: string
+        metadata:
+          type: object
+    FormUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        metadata:
+          type: object
+    FormList:
+      type: object
+      properties:
+        forms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Form'
+        next:
+          type: string
+    Authorization:
+      type: object
+      properties:
+        uid:
+          type: string
+        form_uid:
+          type: string
+        status:
+          type: string
+          enum:
+            - pending
+            - active
+            - revoked
+        customer_email:
+          type: string
+        utility:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    AuthorizationUpdate:
+      type: object
+      properties:
+        metadata:
+          type: object
+    AuthorizationList:
+      type: object
+      properties:
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Authorization'
+        next:
+          type: string
+    Meter:
+      type: object
+      properties:
+        uid:
+          type: string
+        authorization_uid:
+          type: string
+        utility:
+          type: string
+        service_address:
+          type: string
+        meter_number:
+          type: string
+        service_class:
+          type: string
+          enum:
+            - ELECTRIC
+            - GAS
+            - WATER
+        status:
+          type: string
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+    MeterUpdate:
+      type: object
+      properties:
+        metadata:
+          type: object
+    MeterList:
+      type: object
+      properties:
+        meters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Meter'
+        next:
+          type: string
+    MeterCollect:
+      type: object
+      properties:
+        uid:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    MeterMonitor:
+      type: object
+      properties:
+        uid:
+          type: string
+        monitoring:
+          type: boolean
+        message:
+          type: string
+    Bill:
+      type: object
+      properties:
+        uid:
+          type: string
+        meter_uid:
+          type: string
+        statement_date:
+          type: string
+          format: date
+        due_date:
+          type: string
+          format: date
+        total_kwh:
+          type: number
+        total_amount:
+          type: number
+        currency:
+          type: string
+          default: USD
+        created:
+          type: string
+          format: date-time
+    BillList:
+      type: object
+      properties:
+        bills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bill'
+        next:
+          type: string
+    Interval:
+      type: object
+      properties:
+        uid:
+          type: string
+        meter_uid:
+          type: string
+        start:
+          type: string
+          format: date-time
+        end:
+          type: string
+          format: date-time
+        kwh:
+          type: number
+        created:
+          type: string
+          format: date-time
+    IntervalList:
+      type: object
+      properties:
+        intervals:
+          type: array
+          items:
+            $ref: '#/components/schemas/Interval'
+        next:
+          type: string
+    File:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        content_type:
+          type: string
+        size:
+          type: integer
+        url:
+          type: string
+        created:
+          type: string
+          format: date-time
+    FileList:
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+        next:
+          type: string
+    Event:
+      type: object
+      properties:
+        uid:
+          type: string
+        type:
+          type: string
+          description: Event type (e.g., authorization.submitted, meter.data_updated)
+        object_uid:
+          type: string
+        object_type:
+          type: string
+        data:
+          type: object
+        created:
+          type: string
+          format: date-time
+    EventUpdate:
+      type: object
+      properties:
+        metadata:
+          type: object
+    EventList:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        next:
+          type: string
+    BillingAccount:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        utility:
+          type: string
+        account_number:
+          type: string
+        status:
+          type: string
+        created:
+          type: string
+          format: date-time
+    BillingAccountList:
+      type: object
+      properties:
+        billing_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingAccount'
+        next:
+          type: string
+    BillingSummary:
+      type: object
+      properties:
+        uid:
+          type: string
+        billing_account_uid:
+          type: string
+        period_start:
+          type: string
+          format: date
+        period_end:
+          type: string
+          format: date
+        total_amount:
+          type: number
+        total_kwh:
+          type: number
+        currency:
+          type: string
+          default: USD
+        created:
+          type: string
+          format: date-time
+    BillingSummaryList:
+      type: object
+      properties:
+        billing_summaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingSummary'
+        next:
+          type: string

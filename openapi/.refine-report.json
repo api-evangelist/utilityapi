@@ -1,0 +1,30 @@
+{
+  "provider": "utilityapi",
+  "sources": [
+    "utilityapi-accounting-api-openapi.yml",
+    "utilityapi-authorizations-api-openapi.yml",
+    "utilityapi-bills-api-openapi.yml",
+    "utilityapi-events-api-openapi.yml",
+    "utilityapi-files-api-openapi.yml",
+    "utilityapi-forms-api-openapi.yml",
+    "utilityapi-intervals-api-openapi.yml",
+    "utilityapi-meters-api-openapi.yml",
+    "utilityapi-templates-api-openapi.yml"
+  ],
+  "outputs": [
+    "utilityapi-accounting-api-openapi.yml",
+    "utilityapi-authorizations-api-openapi.yml",
+    "utilityapi-bills-api-openapi.yml",
+    "utilityapi-events-api-openapi.yml",
+    "utilityapi-files-api-openapi.yml",
+    "utilityapi-forms-api-openapi.yml",
+    "utilityapi-intervals-api-openapi.yml",
+    "utilityapi-meters-api-openapi.yml",
+    "utilityapi-templates-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
