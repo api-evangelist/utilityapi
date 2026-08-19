@@ -1,0 +1,133 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Utility Accounting Meters API",
+    "version": "2"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Meters",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Meters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/meters",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "next",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "authorization_uid",
+                "value": "",
+                "type": "query",
+                "description": "Filter meters by authorization UID"
+              }
+            ]
+          },
+          "docs": "List all utility meters for authorized customers."
+        },
+        {
+          "info": {
+            "name": "Get Meter",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://utilityapi.com/api/v2/meters/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Retrieve a specific utility meter by UID."
+        },
+        {
+          "info": {
+            "name": "Modify Meter",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://utilityapi.com/api/v2/meters/:uid",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update metadata on a meter."
+        },
+        {
+          "info": {
+            "name": "Collect Meter Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://utilityapi.com/api/v2/meters/:uid/collect",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Trigger data collection for a utility meter."
+        },
+        {
+          "info": {
+            "name": "Monitor Meter Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://utilityapi.com/api/v2/meters/:uid/monitor",
+            "params": [
+              {
+                "name": "uid",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier of the resource"
+              }
+            ]
+          },
+          "docs": "Enable ongoing monitoring for a utility meter to receive automatic data updates."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
