@@ -111,6 +111,8 @@ apis:
   humanURL: https://utilityapi.com/
   baseURL: https://utilityapi.com/api/v2
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -135,6 +137,8 @@ apis:
   humanURL: https://utilityapi.com/
   baseURL: https://utilityapi.com/api/v2
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
