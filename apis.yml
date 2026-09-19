@@ -76,6 +76,8 @@ apis:
   humanURL: https://utilityapi.com/
   baseURL: https://utilityapi.com/api/v2
   tags:
+  - Authorization
+  tags_raw:
   - Authorizations
   properties:
   - type: OpenAPI
