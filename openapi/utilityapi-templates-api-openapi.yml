@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Utility Accounting Templates API
+  title: Utility Templates API
   description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
   version: '2'
   contact:
@@ -67,6 +67,27 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Template:
       type: object
@@ -97,15 +118,6 @@ components:
         modified:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
     TemplateList:
       type: object
       properties:
@@ -116,27 +128,15 @@ components:
         next:
           type: string
           description: Pagination cursor
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    uid:
-      name: uid
-      in: path
-      required: true
-      description: Unique identifier of the resource
-      schema:
-        type: string
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
   securitySchemes:
     bearerAuth:
       type: http

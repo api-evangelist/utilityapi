@@ -1,15 +1,7 @@
 {
   "provider": "utilityapi",
   "sources": [
-    "utilityapi-accounting-api-openapi.yml",
-    "utilityapi-authorizations-api-openapi.yml",
-    "utilityapi-bills-api-openapi.yml",
-    "utilityapi-events-api-openapi.yml",
-    "utilityapi-files-api-openapi.yml",
-    "utilityapi-forms-api-openapi.yml",
-    "utilityapi-intervals-api-openapi.yml",
-    "utilityapi-meters-api-openapi.yml",
-    "utilityapi-templates-api-openapi.yml"
+    "_original/utilityapi-openapi.yml"
   ],
   "outputs": [
     "utilityapi-accounting-api-openapi.yml",
@@ -25,6 +17,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "utilityapi-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "utilityapi-accounting-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "utilityapi-authorizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "utilityapi-bills-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "utilityapi-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "utilityapi-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "utilityapi-forms-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "utilityapi-intervals-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "utilityapi-meters-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "utilityapi-templates-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

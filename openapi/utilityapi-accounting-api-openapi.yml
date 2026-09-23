@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Utility Accounting API
   description: UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.
@@ -119,41 +119,15 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
   schemas:
-    BillingAccountList:
-      type: object
-      properties:
-        billing_accounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingAccount'
-        next:
-          type: string
-    BillingAccount:
-      type: object
-      properties:
-        uid:
-          type: string
-        name:
-          type: string
-        utility:
-          type: string
-        account_number:
-          type: string
-        status:
-          type: string
-        created:
-          type: string
-          format: date-time
-    BillingSummaryList:
-      type: object
-      properties:
-        billing_summaries:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingSummary'
-        next:
-          type: string
     BillingSummary:
       type: object
       properties:
@@ -177,6 +151,40 @@ components:
         created:
           type: string
           format: date-time
+    BillingSummaryList:
+      type: object
+      properties:
+        billing_summaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingSummary'
+        next:
+          type: string
+    BillingAccount:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        utility:
+          type: string
+        account_number:
+          type: string
+        status:
+          type: string
+        created:
+          type: string
+          format: date-time
+    BillingAccountList:
+      type: object
+      properties:
+        billing_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingAccount'
+        next:
+          type: string
     Error:
       type: object
       properties:
@@ -199,14 +207,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    uid:
-      name: uid
-      in: path
-      required: true
-      description: Unique identifier of the resource
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http
