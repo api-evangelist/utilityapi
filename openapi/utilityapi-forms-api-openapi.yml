@@ -128,15 +128,36 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    uid:
-      name: uid
-      in: path
-      required: true
-      description: Unique identifier of the resource
-      schema:
-        type: string
   schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    FormList:
+      type: object
+      properties:
+        forms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Form'
+        next:
+          type: string
+    FormCreate:
+      type: object
+      required:
+      - template_uid
+      properties:
+        template_uid:
+          type: string
+        name:
+          type: string
+        metadata:
+          type: object
     Form:
       type: object
       properties:
@@ -161,26 +182,6 @@ components:
         modified:
           type: string
           format: date-time
-    FormList:
-      type: object
-      properties:
-        forms:
-          type: array
-          items:
-            $ref: '#/components/schemas/Form'
-        next:
-          type: string
-    FormCreate:
-      type: object
-      required:
-      - template_uid
-      properties:
-        template_uid:
-          type: string
-        name:
-          type: string
-        metadata:
-          type: object
     FormUpdate:
       type: object
       properties:
@@ -188,15 +189,6 @@ components:
           type: string
         metadata:
           type: object
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
   responses:
     NotFound:
       description: Resource not found
@@ -216,6 +208,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http
