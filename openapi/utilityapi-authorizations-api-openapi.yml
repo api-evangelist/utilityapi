@@ -134,7 +134,38 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
   schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    AuthorizationList:
+      type: object
+      properties:
+        authorizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Authorization'
+        next:
+          type: string
+    AuthorizationUpdate:
+      type: object
+      properties:
+        metadata:
+          type: object
     Authorization:
       type: object
       properties:
@@ -158,29 +189,6 @@ components:
         modified:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
-    AuthorizationUpdate:
-      type: object
-      properties:
-        metadata:
-          type: object
-    AuthorizationList:
-      type: object
-      properties:
-        authorizations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Authorization'
-        next:
-          type: string
   responses:
     NotFound:
       description: Resource not found
@@ -194,14 +202,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    uid:
-      name: uid
-      in: path
-      required: true
-      description: Unique identifier of the resource
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

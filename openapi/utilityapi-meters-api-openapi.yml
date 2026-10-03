@@ -137,15 +137,6 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
     MeterMonitor:
       type: object
       properties:
@@ -155,6 +146,15 @@ components:
           type: boolean
         message:
           type: string
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
     MeterCollect:
       type: object
       properties:
@@ -163,6 +163,15 @@ components:
         status:
           type: string
         message:
+          type: string
+    MeterList:
+      type: object
+      properties:
+        meters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Meter'
+        next:
           type: string
     Meter:
       type: object
@@ -196,15 +205,14 @@ components:
       properties:
         metadata:
           type: object
-    MeterList:
-      type: object
-      properties:
-        meters:
-          type: array
-          items:
-            $ref: '#/components/schemas/Meter'
-        next:
-          type: string
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
   responses:
     NotFound:
       description: Resource not found
@@ -218,14 +226,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    uid:
-      name: uid
-      in: path
-      required: true
-      description: Unique identifier of the resource
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

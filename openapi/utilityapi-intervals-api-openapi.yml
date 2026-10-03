@@ -84,15 +84,6 @@ components:
         created:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
     IntervalList:
       type: object
       properties:
@@ -101,6 +92,15 @@ components:
           items:
             $ref: '#/components/schemas/Interval'
         next:
+          type: string
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
           type: string
   responses:
     Unauthorized:

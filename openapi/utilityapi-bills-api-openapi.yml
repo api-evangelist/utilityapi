@@ -66,6 +66,24 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
+    BillList:
+      type: object
+      properties:
+        bills:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bill'
+        next:
+          type: string
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
     Bill:
       type: object
       properties:
@@ -89,24 +107,6 @@ components:
         created:
           type: string
           format: date-time
-    BillList:
-      type: object
-      properties:
-        bills:
-          type: array
-          items:
-            $ref: '#/components/schemas/Bill'
-        next:
-          type: string
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
   responses:
     Unauthorized:
       description: Missing or invalid authentication token

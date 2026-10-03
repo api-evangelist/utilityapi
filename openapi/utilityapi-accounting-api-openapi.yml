@@ -119,6 +119,14 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
   schemas:
     Error:
       type: object
@@ -152,6 +160,15 @@ components:
         created:
           type: string
           format: date-time
+    BillingAccountList:
+      type: object
+      properties:
+        billing_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingAccount'
+        next:
+          type: string
     BillingSummaryList:
       type: object
       properties:
@@ -177,15 +194,6 @@ components:
         created:
           type: string
           format: date-time
-    BillingAccountList:
-      type: object
-      properties:
-        billing_accounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingAccount'
-        next:
-          type: string
   responses:
     NotFound:
       description: Resource not found
@@ -199,14 +207,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    uid:
-      name: uid
-      in: path
-      required: true
-      description: Unique identifier of the resource
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

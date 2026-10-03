@@ -97,6 +97,29 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   schemas:
+    EventUpdate:
+      type: object
+      properties:
+        metadata:
+          type: object
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    EventList:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        next:
+          type: string
     Event:
       type: object
       properties:
@@ -114,29 +137,14 @@ components:
         created:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
-    EventUpdate:
-      type: object
-      properties:
-        metadata:
-          type: object
-    EventList:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-        next:
-          type: string
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
   responses:
     NotFound:
       description: Resource not found
@@ -150,14 +158,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-  parameters:
-    uid:
-      name: uid
-      in: path
-      required: true
-      description: Unique identifier of the resource
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http
