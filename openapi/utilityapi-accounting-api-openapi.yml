@@ -119,15 +119,41 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  parameters:
-    uid:
-      name: uid
-      in: path
-      required: true
-      description: Unique identifier of the resource
-      schema:
-        type: string
   schemas:
+    BillingSummaryList:
+      type: object
+      properties:
+        billing_summaries:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingSummary'
+        next:
+          type: string
+    BillingAccountList:
+      type: object
+      properties:
+        billing_accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/BillingAccount'
+        next:
+          type: string
+    BillingAccount:
+      type: object
+      properties:
+        uid:
+          type: string
+        name:
+          type: string
+        utility:
+          type: string
+        account_number:
+          type: string
+        status:
+          type: string
+        created:
+          type: string
+          format: date-time
     Error:
       type: object
       properties:
@@ -160,53 +186,27 @@ components:
         created:
           type: string
           format: date-time
-    BillingAccountList:
-      type: object
-      properties:
-        billing_accounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingAccount'
-        next:
-          type: string
-    BillingSummaryList:
-      type: object
-      properties:
-        billing_summaries:
-          type: array
-          items:
-            $ref: '#/components/schemas/BillingSummary'
-        next:
-          type: string
-    BillingAccount:
-      type: object
-      properties:
-        uid:
-          type: string
-        name:
-          type: string
-        utility:
-          type: string
-        account_number:
-          type: string
-        status:
-          type: string
-        created:
-          type: string
-          format: date-time
   responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: Missing or invalid authentication token
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    uid:
+      name: uid
+      in: path
+      required: true
+      description: Unique identifier of the resource
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

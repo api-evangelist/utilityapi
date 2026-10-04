@@ -96,12 +96,20 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    EventUpdate:
-      type: object
-      properties:
-        metadata:
-          type: object
     Error:
       type: object
       properties:
@@ -110,15 +118,6 @@ components:
           items:
             type: string
         status:
-          type: string
-    EventList:
-      type: object
-      properties:
-        events:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-        next:
           type: string
     Event:
       type: object
@@ -137,6 +136,20 @@ components:
         created:
           type: string
           format: date-time
+    EventUpdate:
+      type: object
+      properties:
+        metadata:
+          type: object
+    EventList:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        next:
+          type: string
   parameters:
     uid:
       name: uid
@@ -145,19 +158,6 @@ components:
       description: Unique identifier of the resource
       schema:
         type: string
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

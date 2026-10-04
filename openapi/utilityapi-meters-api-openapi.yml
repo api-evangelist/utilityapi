@@ -136,43 +136,20 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    MeterMonitor:
-      type: object
-      properties:
-        uid:
-          type: string
-        monitoring:
-          type: boolean
-        message:
-          type: string
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
-    MeterCollect:
-      type: object
-      properties:
-        uid:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-    MeterList:
-      type: object
-      properties:
-        meters:
-          type: array
-          items:
-            $ref: '#/components/schemas/Meter'
-        next:
-          type: string
     Meter:
       type: object
       properties:
@@ -205,6 +182,42 @@ components:
       properties:
         metadata:
           type: object
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    MeterCollect:
+      type: object
+      properties:
+        uid:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+    MeterList:
+      type: object
+      properties:
+        meters:
+          type: array
+          items:
+            $ref: '#/components/schemas/Meter'
+        next:
+          type: string
+    MeterMonitor:
+      type: object
+      properties:
+        uid:
+          type: string
+        monitoring:
+          type: boolean
+        message:
+          type: string
   parameters:
     uid:
       name: uid
@@ -213,19 +226,6 @@ components:
       description: Unique identifier of the resource
       schema:
         type: string
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http

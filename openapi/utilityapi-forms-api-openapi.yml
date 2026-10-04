@@ -128,7 +128,62 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ValidationError:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Missing or invalid authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    FormList:
+      type: object
+      properties:
+        forms:
+          type: array
+          items:
+            $ref: '#/components/schemas/Form'
+        next:
+          type: string
+    FormUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        metadata:
+          type: object
+    FormCreate:
+      type: object
+      required:
+      - template_uid
+      properties:
+        template_uid:
+          type: string
+        name:
+          type: string
+        metadata:
+          type: object
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
     Form:
       type: object
       properties:
@@ -153,42 +208,6 @@ components:
         modified:
           type: string
           format: date-time
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
-    FormUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        metadata:
-          type: object
-    FormList:
-      type: object
-      properties:
-        forms:
-          type: array
-          items:
-            $ref: '#/components/schemas/Form'
-        next:
-          type: string
-    FormCreate:
-      type: object
-      required:
-      - template_uid
-      properties:
-        template_uid:
-          type: string
-        name:
-          type: string
-        metadata:
-          type: object
   parameters:
     uid:
       name: uid
@@ -197,25 +216,6 @@ components:
       description: Unique identifier of the resource
       schema:
         type: string
-  responses:
-    NotFound:
-      description: Resource not found
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: Validation error
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Missing or invalid authentication token
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     bearerAuth:
       type: http
