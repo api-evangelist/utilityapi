@@ -1,0 +1,62 @@
+edges:
+- partner_name: Eversource Massachusetts
+  partner: eversource-energy
+  channel: provider-built
+  direction: provider-built
+  operations: null
+  contract_reference:
+    list: UtilityAPI utility documentation
+    spec_file: null
+    listed_name: Eversource Massachusetts
+    listed_id: evrsrcma
+    matched_domain: eversource.com
+    service_types: null
+    detected_by: sweep-energy.py
+    detected: '2026-10-13'
+  type: coverage
+  relationship: system-coverage
+  evidence: https://utilityapi.com/docs/utilities/evrsrcma
+  detected_by: sweep-energy.py
+  first_seen: '2026-10-13'
+- partner_name: Pacific Gas and Electric
+  partner: pge
+  channel: provider-built
+  direction: provider-built
+  operations: null
+  contract_reference:
+    list: UtilityAPI utility documentation
+    spec_file: null
+    listed_name: Pacific Gas and Electric
+    listed_id: pge
+    matched_domain: pge.com
+    service_types: null
+    detected_by: sweep-energy.py
+    detected: '2026-10-13'
+  type: coverage
+  relationship: system-coverage
+  evidence: https://utilityapi.com/docs/utilities/pge
+  detected_by: sweep-energy.py
+  first_seen: '2026-10-13'
+- partner_name: Southern California Edison
+  partner: southern-california-edison
+  channel: provider-built
+  direction: provider-built
+  operations: null
+  contract_reference:
+    list: UtilityAPI utility documentation
+    spec_file: null
+    listed_name: Southern California Edison
+    listed_id: sce
+    matched_domain: sce.com
+    service_types: null
+    detected_by: sweep-energy.py
+    detected: '2026-10-13'
+  type: coverage
+  relationship: system-coverage
+  evidence: https://utilityapi.com/docs/utilities/sce
+  detected_by: sweep-energy.py
+  first_seen: '2026-10-13'
+generated: '2026-10-13'
+method: searched
+checked:
+- https://utilityapi.com/docs/utilities
