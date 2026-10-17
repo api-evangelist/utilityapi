@@ -66,14 +66,14 @@ paths:
           $ref: '#/components/responses/Unauthorized'
 components:
   schemas:
-    Error:
+    IntervalList:
       type: object
       properties:
-        errors:
+        intervals:
           type: array
           items:
-            type: string
-        status:
+            $ref: '#/components/schemas/Interval'
+        next:
           type: string
     Interval:
       type: object
@@ -93,14 +93,14 @@ components:
         created:
           type: string
           format: date-time
-    IntervalList:
+    Error:
       type: object
       properties:
-        intervals:
+        errors:
           type: array
           items:
-            $ref: '#/components/schemas/Interval'
-        next:
+            type: string
+        status:
           type: string
   responses:
     Unauthorized:

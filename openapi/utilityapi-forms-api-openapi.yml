@@ -129,14 +129,14 @@ paths:
           $ref: '#/components/responses/NotFound'
 components:
   responses:
-    NotFound:
-      description: Resource not found
+    ValidationError:
+      description: Validation error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    ValidationError:
-      description: Validation error
+    NotFound:
+      description: Resource not found
       content:
         application/json:
           schema:
@@ -148,6 +148,26 @@ components:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+    FormCreate:
+      type: object
+      required:
+      - template_uid
+      properties:
+        template_uid:
+          type: string
+        name:
+          type: string
+        metadata:
+          type: object
     FormList:
       type: object
       properties:
@@ -164,26 +184,6 @@ components:
           type: string
         metadata:
           type: object
-    FormCreate:
-      type: object
-      required:
-      - template_uid
-      properties:
-        template_uid:
-          type: string
-        name:
-          type: string
-        metadata:
-          type: object
-    Error:
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            type: string
-        status:
-          type: string
     Form:
       type: object
       properties:
