@@ -269,6 +269,8 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/rules/utilityapi-rules.yml
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/utilityapi/overview
   - type: Plans
     url: plans/utilityapi-plans-pricing.yml
   - type: RateLimits
