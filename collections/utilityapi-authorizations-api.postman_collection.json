@@ -1,68 +1,886 @@
 {
+  "info": {
+    "_postman_id": "5206e6f4-f56e-492c-87d7-7ddb9875529f",
+    "name": "Utility Authorizations API",
+    "description": "UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.\n\nContact Support:\n Name: UtilityAPI Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:13:31.000Z",
+    "updatedAt": "2026-10-21T21:13:31.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-5206e6f4-f56e-492c-87d7-7ddb9875529f"
+  },
   "item": [
     {
-      "id": "7e7b2d42-c6d6-4fa5-b94f-8c8a1db0923d",
-      "name": "Authorizations",
-      "description": {
-        "content": "Submitted authorizations from utility customers",
-        "type": "text/plain"
-      },
+      "name": "authorizations",
       "item": [
         {
-          "id": "31377361-ed4f-4e29-99c0-f93a71d77cd2",
-          "name": "List Authorizations",
-          "request": {
-            "name": "List Authorizations",
-            "description": {
-              "content": "List all submitted authorizations for the authenticated account.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "authorizations"
+          "name": "{uid}",
+          "item": [
+            {
+              "name": "revoke",
+              "item": [
+                {
+                  "name": "Revoke Authorization",
+                  "id": "7b2a508a-df07-4c0b-85a5-52ad245db8cc",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid/revoke",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid",
+                        "revoke"
+                      ],
+                      "variable": [
+                        {
+                          "id": "a548a1dc-346a-46c1-87f5-999f22b9cd8d",
+                          "key": "uid",
+                          "value": "<string>",
+                          "description": "(Required) Unique identifier of the resource"
+                        }
+                      ]
+                    },
+                    "description": "Revoke a customer's authorization to access their utility data."
+                  },
+                  "response": [
+                    {
+                      "id": "6379a2b1-b62c-43c0-8531-1b6c89c8d064",
+                      "name": "Authorization revoked",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/authorizations/:uid/revoke",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "authorizations",
+                            ":uid",
+                            "revoke"
+                          ],
+                          "variable": [
+                            {
+                              "key": "uid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"uid\": \"<string>\",\n  \"form_uid\": \"<string>\",\n  \"status\": \"revoked\",\n  \"customer_email\": \"<string>\",\n  \"utility\": \"<string>\",\n  \"created\": \"<dateTime>\",\n  \"modified\": \"<dateTime>\"\n}",
+                      "createdAt": "2026-10-21T21:13:32.000Z",
+                      "updatedAt": "2026-10-21T21:13:32.000Z",
+                      "uid": "35240-6379a2b1-b62c-43c0-8531-1b6c89c8d064"
+                    },
+                    {
+                      "id": "96865e30-3b2b-4566-bcf8-7e8c65546540",
+                      "name": "Missing or invalid authentication token",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/authorizations/:uid/revoke",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "authorizations",
+                            ":uid",
+                            "revoke"
+                          ],
+                          "variable": [
+                            {
+                              "key": "uid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:13:32.000Z",
+                      "updatedAt": "2026-10-21T21:13:32.000Z",
+                      "uid": "35240-96865e30-3b2b-4566-bcf8-7e8c65546540"
+                    },
+                    {
+                      "id": "fa3e1302-1524-4b1a-b5ff-5e422efeb59d",
+                      "name": "Resource not found",
+                      "originalRequest": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/authorizations/:uid/revoke",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "authorizations",
+                            ":uid",
+                            "revoke"
+                          ],
+                          "variable": [
+                            {
+                              "key": "uid"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                      "createdAt": "2026-10-21T21:13:32.000Z",
+                      "updatedAt": "2026-10-21T21:13:32.000Z",
+                      "uid": "35240-fa3e1302-1524-4b1a-b5ff-5e422efeb59d"
+                    }
+                  ],
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-7b2a508a-df07-4c0b-85a5-52ad245db8cc"
+                }
               ],
+              "id": "427eecdf-e293-4051-84c5-0ab70b1965b1",
+              "createdAt": "2026-10-21T21:13:32.000Z",
+              "updatedAt": "2026-10-21T21:13:32.000Z",
+              "uid": "35240-427eecdf-e293-4051-84c5-0ab70b1965b1"
+            },
+            {
+              "name": "Get Authorization",
+              "id": "de652d2d-f5f4-4bed-948e-ec97034b6435",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/authorizations/:uid",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authorizations",
+                    ":uid"
+                  ],
+                  "variable": [
+                    {
+                      "id": "a30aa0ad-da72-41bf-b810-8479fc856a86",
+                      "key": "uid",
+                      "value": "<string>",
+                      "description": "(Required) Unique identifier of the resource"
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific authorization by UID."
+              },
+              "response": [
+                {
+                  "id": "50f0d8e4-cde5-4069-a839-33eeb6c36dfc",
+                  "name": "Authorization details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"uid\": \"<string>\",\n  \"form_uid\": \"<string>\",\n  \"status\": \"revoked\",\n  \"customer_email\": \"<string>\",\n  \"utility\": \"<string>\",\n  \"created\": \"<dateTime>\",\n  \"modified\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-50f0d8e4-cde5-4069-a839-33eeb6c36dfc"
+                },
+                {
+                  "id": "4eb4c936-20e9-424d-b090-dcb423a5c056",
+                  "name": "Missing or invalid authentication token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-4eb4c936-20e9-424d-b090-dcb423a5c056"
+                },
+                {
+                  "id": "9d861a9f-295f-41c0-99a2-74858c0bf54c",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-9d861a9f-295f-41c0-99a2-74858c0bf54c"
+                }
+              ],
+              "createdAt": "2026-10-21T21:13:32.000Z",
+              "updatedAt": "2026-10-21T21:13:32.000Z",
+              "uid": "35240-de652d2d-f5f4-4bed-948e-ec97034b6435"
+            },
+            {
+              "name": "Modify Authorization",
+              "id": "e6f23b40-66a7-4c16-8e65-3d60d8b1a775",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metadata\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authorizations/:uid",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authorizations",
+                    ":uid"
+                  ],
+                  "variable": [
+                    {
+                      "id": "ab2e67a9-e47e-4d8e-bf77-3af63dca4d5e",
+                      "key": "uid",
+                      "value": "<string>",
+                      "description": "(Required) Unique identifier of the resource"
+                    }
+                  ]
+                },
+                "description": "Update metadata on an existing authorization."
+              },
+              "response": [
+                {
+                  "id": "5ac5d5b3-6e60-4a88-be82-cbaede60c17a",
+                  "name": "Updated authorization",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"metadata\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"uid\": \"<string>\",\n  \"form_uid\": \"<string>\",\n  \"status\": \"revoked\",\n  \"customer_email\": \"<string>\",\n  \"utility\": \"<string>\",\n  \"created\": \"<dateTime>\",\n  \"modified\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-5ac5d5b3-6e60-4a88-be82-cbaede60c17a"
+                },
+                {
+                  "id": "1faa01bd-fe71-4666-9dc8-0be45361e8e8",
+                  "name": "Missing or invalid authentication token",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"metadata\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-1faa01bd-fe71-4666-9dc8-0be45361e8e8"
+                },
+                {
+                  "id": "245f28fa-de62-4dca-9aa5-606ee4569fa4",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"metadata\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-245f28fa-de62-4dca-9aa5-606ee4569fa4"
+                }
+              ],
+              "createdAt": "2026-10-21T21:13:32.000Z",
+              "updatedAt": "2026-10-21T21:13:32.000Z",
+              "uid": "35240-e6f23b40-66a7-4c16-8e65-3d60d8b1a775"
+            },
+            {
+              "name": "Delete Authorization",
+              "id": "4f4fb800-896f-4034-98c3-eb333af868db",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/authorizations/:uid",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authorizations",
+                    ":uid"
+                  ],
+                  "variable": [
+                    {
+                      "id": "870dea92-292d-467b-865f-9b062f9837a5",
+                      "key": "uid",
+                      "value": "<string>",
+                      "description": "(Required) Unique identifier of the resource"
+                    }
+                  ]
+                },
+                "description": "Delete an authorization and associated data."
+              },
+              "response": [
+                {
+                  "id": "98ab4b48-c0a2-4042-9c9f-413caec598da",
+                  "name": "Authorization deleted",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "No Content",
+                  "code": 204,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": null,
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-98ab4b48-c0a2-4042-9c9f-413caec598da"
+                },
+                {
+                  "id": "dbace9d7-ffa2-4d14-83d5-22b7a3d65b76",
+                  "name": "Missing or invalid authentication token",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-dbace9d7-ffa2-4d14-83d5-22b7a3d65b76"
+                },
+                {
+                  "id": "29fee7ac-ccc8-4399-a868-87adb230f838",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/authorizations/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authorizations",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:32.000Z",
+                  "updatedAt": "2026-10-21T21:13:32.000Z",
+                  "uid": "35240-29fee7ac-ccc8-4399-a868-87adb230f838"
+                }
+              ],
+              "createdAt": "2026-10-21T21:13:32.000Z",
+              "updatedAt": "2026-10-21T21:13:32.000Z",
+              "uid": "35240-4f4fb800-896f-4034-98c3-eb333af868db"
+            }
+          ],
+          "id": "56f7b449-3d43-4701-a9b8-f26865a9c248",
+          "createdAt": "2026-10-21T21:13:32.000Z",
+          "updatedAt": "2026-10-21T21:13:32.000Z",
+          "uid": "35240-56f7b449-3d43-4701-a9b8-f26865a9c248"
+        },
+        {
+          "name": "List Authorizations",
+          "id": "9b110584-db3c-4f3c-9fc5-9d3e4e78fc98",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/authorizations?limit=100&next=<string>&status=revoked",
               "host": [
                 "{{baseUrl}}"
               ],
+              "path": [
+                "authorizations"
+              ],
               "query": [
                 {
-                  "disabled": false,
                   "key": "limit",
                   "value": "100"
                 },
                 {
-                  "disabled": false,
                   "key": "next",
                   "value": "<string>"
                 },
                 {
-                  "disabled": false,
                   "key": "status",
-                  "value": "<string>"
+                  "value": "revoked"
                 }
-              ],
-              "variable": []
+              ]
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
+            "description": "List all submitted authorizations for the authenticated account."
           },
           "response": [
             {
-              "id": "f27cecd8-1afa-45b0-ae2d-c095dbcf3608",
+              "id": "71a823bf-2e2f-4d9a-a52b-632506317a90",
               "name": "List of authorizations",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "authorizations"
-                  ],
+                  "raw": "{{baseUrl}}/authorizations?limit=100&next=<string>&status=revoked",
                   "host": [
                     "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authorizations"
                   ],
                   "query": [
                     {
@@ -75,50 +893,50 @@
                     },
                     {
                       "key": "status",
-                      "value": "<string>"
+                      "value": "revoked"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"authorizations\": [\n    {\n      \"uid\": \"string\",\n      \"form_uid\": \"string\",\n      \"status\": \"active\",\n      \"customer_email\": \"string\",\n      \"utility\": \"string\",\n      \"created\": \"1976-01-12T19:40:10.570Z\",\n      \"modified\": \"2013-03-31T22:13:05.136Z\"\n    },\n    {\n      \"uid\": \"string\",\n      \"form_uid\": \"string\",\n      \"status\": \"pending\",\n      \"customer_email\": \"string\",\n      \"utility\": \"string\",\n      \"created\": \"1993-11-27T16:31:20.100Z\",\n      \"modified\": \"1947-08-24T21:48:34.728Z\"\n    }\n  ],\n  \"next\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"authorizations\": [\n    {\n      \"uid\": \"<string>\",\n      \"form_uid\": \"<string>\",\n      \"status\": \"pending\",\n      \"customer_email\": \"<string>\",\n      \"utility\": \"<string>\",\n      \"created\": \"<dateTime>\",\n      \"modified\": \"<dateTime>\"\n    },\n    {\n      \"uid\": \"<string>\",\n      \"form_uid\": \"<string>\",\n      \"status\": \"active\",\n      \"customer_email\": \"<string>\",\n      \"utility\": \"<string>\",\n      \"created\": \"<dateTime>\",\n      \"modified\": \"<dateTime>\"\n    }\n  ],\n  \"next\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T21:13:32.000Z",
+              "updatedAt": "2026-10-21T21:13:32.000Z",
+              "uid": "35240-71a823bf-2e2f-4d9a-a52b-632506317a90"
             },
             {
-              "id": "bdd20533-e49c-4837-9583-48b60d30a845",
+              "id": "10c3c31a-eeb7-4223-a709-7a44121fd2e4",
               "name": "Missing or invalid authentication token",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "authorizations"
-                  ],
+                  "raw": "{{baseUrl}}/authorizations?limit=100&next=<string>&status=revoked",
                   "host": [
                     "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authorizations"
                   ],
                   "query": [
                     {
@@ -131,893 +949,37 @@
                     },
                     {
                       "key": "status",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "8ca29e60-a626-4a6e-bce4-0665adf91e5d",
-          "name": "Get Authorization",
-          "request": {
-            "name": "Get Authorization",
-            "description": {
-              "content": "Retrieve a specific authorization by UID.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "authorizations",
-                ":uid"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "uid",
-                  "description": "(Required) Unique identifier of the resource"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "c2ca2df4-b4c6-4e88-83a9-56130573e9a7",
-              "name": "Authorization details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
+                      "value": "revoked"
                     }
                   ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"uid\": \"string\",\n  \"form_uid\": \"string\",\n  \"status\": \"active\",\n  \"customer_email\": \"string\",\n  \"utility\": \"string\",\n  \"created\": \"1992-07-10T21:25:27.334Z\",\n  \"modified\": \"1994-06-04T09:57:05.088Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "0470b62d-4940-4320-b2e1-0cc914c25f5c",
-              "name": "Missing or invalid authentication token",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "8e56c70b-73cb-4209-ae54-0eb2106ff4fa",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "5cb39aeb-96b8-4354-a070-4a1b233d67ae",
-          "name": "Modify Authorization",
-          "request": {
-            "name": "Modify Authorization",
-            "description": {
-              "content": "Update metadata on an existing authorization.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "authorizations",
-                ":uid"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "uid",
-                  "description": "(Required) Unique identifier of the resource"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PUT",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"metadata\": \"<object>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "32a8348c-18ee-4a42-9ba3-1dbb4fcd59b4",
-              "name": "Updated authorization",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"metadata\": \"<object>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"uid\": \"string\",\n  \"form_uid\": \"string\",\n  \"status\": \"active\",\n  \"customer_email\": \"string\",\n  \"utility\": \"string\",\n  \"created\": \"1992-07-10T21:25:27.334Z\",\n  \"modified\": \"1994-06-04T09:57:05.088Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "b8fb6836-d2d9-4d8b-80a6-7dc28fdf5506",
-              "name": "Missing or invalid authentication token",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"metadata\": \"<object>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "575ddfd9-bc21-4c85-aac6-cde08d691e15",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"metadata\": \"<object>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T21:13:32.000Z",
+              "updatedAt": "2026-10-21T21:13:32.000Z",
+              "uid": "35240-10c3c31a-eeb7-4223-a709-7a44121fd2e4"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "2b1d6446-11a8-4c9d-aa34-c8bccad9793e",
-          "name": "Delete Authorization",
-          "request": {
-            "name": "Delete Authorization",
-            "description": {
-              "content": "Delete an authorization and associated data.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "authorizations",
-                ":uid"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "uid",
-                  "description": "(Required) Unique identifier of the resource"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "DELETE",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "f5d816c8-66df-4b9e-8a05-2fc017885e4d",
-              "name": "Authorization deleted",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "No Content",
-              "code": 204,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "text/plain"
-                }
-              ],
-              "body": "",
-              "cookie": [],
-              "_postman_previewlanguage": "text"
-            },
-            {
-              "id": "37fc6e19-0c4c-4a2d-97a7-69efd2279e5c",
-              "name": "Missing or invalid authentication token",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "91bc1f91-f71f-4b3b-a8ca-20f9c1a34a6f",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "DELETE",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "9718c9f5-f59c-4d67-8b4b-444916084527",
-          "name": "Revoke Authorization",
-          "request": {
-            "name": "Revoke Authorization",
-            "description": {
-              "content": "Revoke a customer's authorization to access their utility data.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "authorizations",
-                ":uid",
-                "revoke"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "uid",
-                  "description": "(Required) Unique identifier of the resource"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "POST",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "5b31aa69-5a8f-4740-a473-a7a1d63cfcfb",
-              "name": "Authorization revoked",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid",
-                    "revoke"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"uid\": \"string\",\n  \"form_uid\": \"string\",\n  \"status\": \"active\",\n  \"customer_email\": \"string\",\n  \"utility\": \"string\",\n  \"created\": \"1992-07-10T21:25:27.334Z\",\n  \"modified\": \"1994-06-04T09:57:05.088Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fec693d3-2710-433f-80f9-8048db77e05a",
-              "name": "Missing or invalid authentication token",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid",
-                    "revoke"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "7b1d1d16-c7be-4bf0-a226-8df2f6850cab",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "authorizations",
-                    ":uid",
-                    "revoke"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T21:13:32.000Z",
+          "updatedAt": "2026-10-21T21:13:32.000Z",
+          "uid": "35240-9b110584-db3c-4f3c-9fc5-9d3e4e78fc98"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://utilityapi.com/api/v2",
-      "key": "baseUrl"
+      "id": "e85ef226-2914-4fe8-a371-1e938cdbec73",
+      "createdAt": "2026-10-21T21:13:32.000Z",
+      "updatedAt": "2026-10-21T21:13:32.000Z",
+      "uid": "35240-e85ef226-2914-4fe8-a371-1e938cdbec73"
     }
   ],
   "auth": {
@@ -1025,17 +987,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "cd40c7f1-6209-411f-bb9a-c65cb5606ea4",
-    "name": "Utility Accounting Authorizations API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.\n\nContact Support:\n Name: UtilityAPI Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://utilityapi.com/api/v2"
     }
-  }
+  ]
 }

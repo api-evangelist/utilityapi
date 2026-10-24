@@ -1,69 +1,515 @@
 {
+  "info": {
+    "_postman_id": "493d6a2c-330e-411b-8874-a5e286a48873",
+    "name": "Utility Events API",
+    "description": "UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.\n\nContact Support:\n Name: UtilityAPI Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-10-21T21:13:40.000Z",
+    "updatedAt": "2026-10-21T21:13:40.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-493d6a2c-330e-411b-8874-a5e286a48873"
+  },
   "item": [
     {
-      "id": "911b4a88-e590-4359-b3e1-a51c66e7262a",
-      "name": "Events",
-      "description": {
-        "content": "Webhook events and notifications",
-        "type": "text/plain"
-      },
+      "name": "events",
       "item": [
         {
-          "id": "967dfb10-74e6-4f08-b631-bfbcac58de5a",
-          "name": "List Events",
-          "request": {
-            "name": "List Events",
-            "description": {
-              "content": "List webhook events for the authenticated account.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "events"
+          "name": "{uid}",
+          "item": [
+            {
+              "name": "Get Event",
+              "id": "667370f4-5ed7-4a6b-adc2-d78eea1b002a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/events/:uid",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events",
+                    ":uid"
+                  ],
+                  "variable": [
+                    {
+                      "id": "df8dfd6b-084c-4b49-8cd0-4276bf19c884",
+                      "key": "uid",
+                      "value": "<string>",
+                      "description": "(Required) Unique identifier of the resource"
+                    }
+                  ]
+                },
+                "description": "Retrieve a specific webhook event by UID."
+              },
+              "response": [
+                {
+                  "id": "681a0f9e-c6cb-4f68-974a-fdccdff9bbbf",
+                  "name": "Event details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"uid\": \"<string>\",\n  \"type\": \"<string>\",\n  \"object_uid\": \"<string>\",\n  \"object_type\": \"<string>\",\n  \"data\": {},\n  \"created\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-21T21:13:40.000Z",
+                  "updatedAt": "2026-10-21T21:13:40.000Z",
+                  "uid": "35240-681a0f9e-c6cb-4f68-974a-fdccdff9bbbf"
+                },
+                {
+                  "id": "02a1c5c9-3dc6-4af8-92b3-9ec27e279cf9",
+                  "name": "Missing or invalid authentication token",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:40.000Z",
+                  "updatedAt": "2026-10-21T21:13:40.000Z",
+                  "uid": "35240-02a1c5c9-3dc6-4af8-92b3-9ec27e279cf9"
+                },
+                {
+                  "id": "e9431c9c-52a8-4483-a977-22a52966166c",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:40.000Z",
+                  "updatedAt": "2026-10-21T21:13:40.000Z",
+                  "uid": "35240-e9431c9c-52a8-4483-a977-22a52966166c"
+                }
               ],
+              "createdAt": "2026-10-21T21:13:40.000Z",
+              "updatedAt": "2026-10-21T21:13:40.000Z",
+              "uid": "35240-667370f4-5ed7-4a6b-adc2-d78eea1b002a"
+            },
+            {
+              "name": "Modify Event",
+              "id": "4d9cc8ab-b330-492d-9c52-242be2c7aa4e",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"metadata\": {}\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/events/:uid",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events",
+                    ":uid"
+                  ],
+                  "variable": [
+                    {
+                      "id": "cb483567-092a-4887-bc23-1883a9810438",
+                      "key": "uid",
+                      "value": "<string>",
+                      "description": "(Required) Unique identifier of the resource"
+                    }
+                  ]
+                },
+                "description": "Update metadata on an event."
+              },
+              "response": [
+                {
+                  "id": "c86472c9-c350-4d3f-b0ff-644f0a63fa78",
+                  "name": "Updated event",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"metadata\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"uid\": \"<string>\",\n  \"type\": \"<string>\",\n  \"object_uid\": \"<string>\",\n  \"object_type\": \"<string>\",\n  \"data\": {},\n  \"created\": \"<dateTime>\"\n}",
+                  "createdAt": "2026-10-21T21:13:40.000Z",
+                  "updatedAt": "2026-10-21T21:13:40.000Z",
+                  "uid": "35240-c86472c9-c350-4d3f-b0ff-644f0a63fa78"
+                },
+                {
+                  "id": "59c5b2f5-7ed4-443f-84a0-58ae2f851058",
+                  "name": "Missing or invalid authentication token",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"metadata\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:40.000Z",
+                  "updatedAt": "2026-10-21T21:13:40.000Z",
+                  "uid": "35240-59c5b2f5-7ed4-443f-84a0-58ae2f851058"
+                },
+                {
+                  "id": "2570f4f0-e4ec-44ed-95e3-0fc43c947138",
+                  "name": "Resource not found",
+                  "originalRequest": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"metadata\": {}\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/events/:uid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "events",
+                        ":uid"
+                      ],
+                      "variable": [
+                        {
+                          "key": "uid"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+                  "createdAt": "2026-10-21T21:13:40.000Z",
+                  "updatedAt": "2026-10-21T21:13:40.000Z",
+                  "uid": "35240-2570f4f0-e4ec-44ed-95e3-0fc43c947138"
+                }
+              ],
+              "createdAt": "2026-10-21T21:13:40.000Z",
+              "updatedAt": "2026-10-21T21:13:40.000Z",
+              "uid": "35240-4d9cc8ab-b330-492d-9c52-242be2c7aa4e"
+            }
+          ],
+          "id": "9ef4a33b-f60c-4007-89b9-5297d81e1d31",
+          "createdAt": "2026-10-21T21:13:40.000Z",
+          "updatedAt": "2026-10-21T21:13:40.000Z",
+          "uid": "35240-9ef4a33b-f60c-4007-89b9-5297d81e1d31"
+        },
+        {
+          "name": "List Events",
+          "id": "026a5311-974d-4db0-a3aa-5b3def69c11a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/events?limit=100&next=<string>&type=<string>",
               "host": [
                 "{{baseUrl}}"
               ],
+              "path": [
+                "events"
+              ],
               "query": [
                 {
-                  "disabled": false,
                   "key": "limit",
                   "value": "100"
                 },
                 {
-                  "disabled": false,
                   "key": "next",
                   "value": "<string>"
                 },
                 {
-                  "disabled": false,
+                  "description": "Filter by event type",
                   "key": "type",
-                  "value": "<string>",
-                  "description": "Filter by event type"
+                  "value": "<string>"
                 }
-              ],
-              "variable": []
+              ]
             },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
+            "description": "List webhook events for the authenticated account."
           },
           "response": [
             {
-              "id": "daecfe47-f7ca-4e58-89db-5b1702a9f91e",
+              "id": "34e49fcf-f036-4bf6-8ef1-7c42308f493d",
               "name": "List of events",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "events"
-                  ],
+                  "raw": "{{baseUrl}}/events?limit=100&next=<string>&type=<string>",
                   "host": [
                     "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
                   ],
                   "query": [
                     {
@@ -75,51 +521,52 @@
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by event type",
                       "key": "type",
                       "value": "<string>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
+                  ]
+                }
               },
               "status": "OK",
               "code": 200,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"events\": [\n    {\n      \"uid\": \"string\",\n      \"type\": \"string\",\n      \"object_uid\": \"string\",\n      \"object_type\": \"string\",\n      \"data\": {},\n      \"created\": \"1957-12-25T03:38:25.512Z\"\n    },\n    {\n      \"uid\": \"string\",\n      \"type\": \"string\",\n      \"object_uid\": \"string\",\n      \"object_type\": \"string\",\n      \"data\": {},\n      \"created\": \"1949-08-07T15:08:47.063Z\"\n    }\n  ],\n  \"next\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"events\": [\n    {\n      \"uid\": \"<string>\",\n      \"type\": \"<string>\",\n      \"object_uid\": \"<string>\",\n      \"object_type\": \"<string>\",\n      \"data\": {},\n      \"created\": \"<dateTime>\"\n    },\n    {\n      \"uid\": \"<string>\",\n      \"type\": \"<string>\",\n      \"object_uid\": \"<string>\",\n      \"object_type\": \"<string>\",\n      \"data\": {},\n      \"created\": \"<dateTime>\"\n    }\n  ],\n  \"next\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T21:13:40.000Z",
+              "updatedAt": "2026-10-21T21:13:40.000Z",
+              "uid": "35240-34e49fcf-f036-4bf6-8ef1-7c42308f493d"
             },
             {
-              "id": "88e2c107-4acb-4292-bb14-1087eb8f09ac",
+              "id": "523f5467-20d2-44d1-adcd-bdd012fd14ed",
               "name": "Missing or invalid authentication token",
               "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
                 "url": {
-                  "path": [
-                    "events"
-                  ],
+                  "raw": "{{baseUrl}}/events?limit=100&next=<string>&type=<string>",
                   "host": [
                     "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "events"
                   ],
                   "query": [
                     {
@@ -131,494 +578,39 @@
                       "value": "<string>"
                     },
                     {
+                      "description": "Filter by event type",
                       "key": "type",
                       "value": "<string>"
                     }
-                  ],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "7fd8ba6c-ae34-47eb-9bd8-4e063373903b",
-          "name": "Get Event",
-          "request": {
-            "name": "Get Event",
-            "description": {
-              "content": "Retrieve a specific webhook event by UID.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "events",
-                ":uid"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "uid",
-                  "description": "(Required) Unique identifier of the resource"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "GET",
-            "auth": null
-          },
-          "response": [
-            {
-              "id": "6fafc0ce-3a9d-4b2b-9ada-30aa2775f221",
-              "name": "Event details",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "events",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
                   ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"uid\": \"string\",\n  \"type\": \"string\",\n  \"object_uid\": \"string\",\n  \"object_type\": \"string\",\n  \"data\": {},\n  \"created\": \"1990-11-09T10:50:53.195Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "0b38a526-1dde-43d5-a326-bfa9bc7961a2",
-              "name": "Missing or invalid authentication token",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "events",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Unauthorized",
-              "code": 401,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "fcfd4dea-cbf5-46ff-b922-dafe75e64101",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "events",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "GET",
-                "body": {}
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            }
-          ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
-        },
-        {
-          "id": "6138b7b7-7bd1-42cc-8eb8-09663c804b05",
-          "name": "Modify Event",
-          "request": {
-            "name": "Modify Event",
-            "description": {
-              "content": "Update metadata on an event.",
-              "type": "text/plain"
-            },
-            "url": {
-              "path": [
-                "events",
-                ":uid"
-              ],
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "query": [],
-              "variable": [
-                {
-                  "disabled": false,
-                  "type": "any",
-                  "value": "<string>",
-                  "key": "uid",
-                  "description": "(Required) Unique identifier of the resource"
-                }
-              ]
-            },
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Accept",
-                "value": "application/json"
-              }
-            ],
-            "method": "PUT",
-            "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"metadata\": \"<object>\"\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
-          },
-          "response": [
-            {
-              "id": "f11f43cf-0e9f-485c-ae19-c1b7cf16feec",
-              "name": "Updated event",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "events",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"metadata\": \"<object>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "OK",
-              "code": 200,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"uid\": \"string\",\n  \"type\": \"string\",\n  \"object_uid\": \"string\",\n  \"object_type\": \"string\",\n  \"data\": {},\n  \"created\": \"1990-11-09T10:50:53.195Z\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "46b77e15-717b-42ee-8ed7-622bede232d3",
-              "name": "Missing or invalid authentication token",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "events",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"metadata\": \"<object>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
                 }
               },
               "status": "Unauthorized",
               "code": 401,
+              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
               "cookie": [],
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "id": "1bc356ed-117f-4148-823d-b24ecc55055d",
-              "name": "Resource not found",
-              "originalRequest": {
-                "url": {
-                  "path": [
-                    "events",
-                    ":uid"
-                  ],
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "query": [],
-                  "variable": [
-                    {
-                      "disabled": false,
-                      "type": "any",
-                      "value": "<string>",
-                      "key": "uid",
-                      "description": "(Required) Unique identifier of the resource"
-                    }
-                  ]
-                },
-                "header": [
-                  {
-                    "description": {
-                      "content": "Added as a part of security scheme: bearer",
-                      "type": "text/plain"
-                    },
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "PUT",
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"metadata\": \"<object>\"\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "status": "Not Found",
-              "code": 404,
-              "header": [
-                {
-                  "key": "Content-Type",
-                  "value": "application/json"
-                }
-              ],
-              "body": "{\n  \"errors\": [\n    \"string\",\n    \"string\"\n  ],\n  \"status\": \"string\"\n}",
-              "cookie": [],
-              "_postman_previewlanguage": "json"
+              "responseTime": null,
+              "body": "{\n  \"errors\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"status\": \"<string>\"\n}",
+              "createdAt": "2026-10-21T21:13:40.000Z",
+              "updatedAt": "2026-10-21T21:13:40.000Z",
+              "uid": "35240-523f5467-20d2-44d1-adcd-bdd012fd14ed"
             }
           ],
-          "event": [],
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          }
+          "createdAt": "2026-10-21T21:13:40.000Z",
+          "updatedAt": "2026-10-21T21:13:40.000Z",
+          "uid": "35240-026a5311-974d-4db0-a3aa-5b3def69c11a"
         }
       ],
-      "event": []
-    }
-  ],
-  "event": [],
-  "variable": [
-    {
-      "type": "string",
-      "value": "https://utilityapi.com/api/v2",
-      "key": "baseUrl"
+      "id": "73a9f95c-19dc-4e67-b4c1-2ae8d48f43fe",
+      "createdAt": "2026-10-21T21:13:40.000Z",
+      "updatedAt": "2026-10-21T21:13:40.000Z",
+      "uid": "35240-73a9f95c-19dc-4e67-b4c1-2ae8d48f43fe"
     }
   ],
   "auth": {
@@ -626,17 +618,15 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}"
+        "value": "{{bearerToken}}",
+        "type": "string"
       }
     ]
   },
-  "info": {
-    "_postman_id": "676b6e24-9f75-4fd0-9065-7f3205c4b030",
-    "name": "Utility Accounting Events API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": {
-      "content": "UtilityAPI provides a REST API for collecting, standardizing, and sharing utility data including meters, bills, intervals, authorizations, and webhook events. Supports the Green Button standard for energy data sharing.\n\nContact Support:\n Name: UtilityAPI Support",
-      "type": "text/plain"
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://utilityapi.com/api/v2"
     }
-  }
+  ]
 }
