@@ -1,4 +1,4 @@
-# UtilityAPI (utilityapi)
+# UtilityAPI
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,69 +66,174 @@
 
 UtilityAPI collects, standardizes, and shares utility data seamlessly and securely, providing a platform for accessing energy and utility billing data, meter intervals, and authorization workflows for energy companies, cleantech firms, and developers.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/apis.yml)
+**Areas:** Energy · Utilities · Green Button · Billing Data · Meter Data · Clean Energy
 
-## Scope
+## UtilityAPI on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for UtilityAPI is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/utilityapi/](https://apis.io/providers/utilityapi/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (9)
 
-- Energy
-- Utilities
-- Green Button
-- Billing Data
-- Meter Data
-- Clean Energy
+- [UtilityAPI Accounting API](https://apis.io/apis/utilityapi/utilityapi-accounting-api/) — Customer billing accounts and billing summaries
+- [UtilityAPI Authorizations API](https://apis.io/apis/utilityapi/utilityapi-authorizations-api/) — Submitted authorizations from utility customers
+- [UtilityAPI Bills API](https://apis.io/apis/utilityapi/utilityapi-bills-api/) — Utility billing information
+- [UtilityAPI Events API](https://apis.io/apis/utilityapi/utilityapi-events-api/) — Webhook events and notifications
+- [UtilityAPI Files API](https://apis.io/apis/utilityapi/utilityapi-files-api/) — Raw or formatted data files linked to other objects
+- [UtilityAPI Forms API](https://apis.io/apis/utilityapi/utilityapi-forms-api/) — Customer-facing authorization forms management
+- [UtilityAPI Intervals API](https://apis.io/apis/utilityapi/utilityapi-intervals-api/) — Meter usage intervals
+- [UtilityAPI Meters API](https://apis.io/apis/utilityapi/utilityapi-meters-api/) — Utility services and meter data for authorized customers
+- [UtilityAPI Templates API](https://apis.io/apis/utilityapi/utilityapi-templates-api/) — Authorization form templates for formatting customer authorization forms
 
-## Timestamps
+### Published properties
 
-- **Created:** 2025-05-02
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### UtilityAPI
+Which operations an agent can call, which act, and which need a human in the loop.
 
-UtilityAPI provides a REST API for accessing utility data including meters, bills, intervals, authorizations, and webhook events. Supports Green Button standard for energy data sharing.
+- [Utilityapi Agentic Access](https://apis.io/agentic-access/utilityapi/utilityapi-agentic-access/)
 
-- **Human URL:** [https://utilityapi.com/](https://utilityapi.com/)
-- **Base URL:** `https://utilityapi.com/api/v2`
+#### JSON Schema (3)
 
-#### Tags
+The data models the API reads and writes.
 
-- Energy
-- Utilities
-- Billing
-- Meter Data
-- Green Button
-- Webhooks
+- [Bill](https://apis.io/schemas/utilityapi/utilityapi-bill/)
+- [Interval](https://apis.io/schemas/utilityapi/utilityapi-interval/)
+- [Meter](https://apis.io/schemas/utilityapi/utilityapi-meter/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://utilityapi.com/docs)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/openapi/utilityapi-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/json-schema/utilityapi-meter-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/json-schema/utilityapi-bill-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/json-schema/utilityapi-interval-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/rules/utilityapi-rules.yml)
-- [Postman Collection](collections/utilityapi.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/utilityapi.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-## Common Properties
+- [Utilityapi Meter Structure](https://apis.io/json-structure/utilityapi/utilityapi-meter-structure/)
 
-- [GitHub Organization](https://github.com/utilityapi)
-- [LinkedIn](https://www.linkedin.com/company/utilityapi)
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Utilityapi Context](https://apis.io/jsonld/utilityapi/utilityapi-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [UtilityAPI Vocabulary](https://apis.io/vocabularies/utilityapi/utilityapi-vocabulary/)
+
+#### Examples (3)
+
+Example requests and responses.
+
+- [Utilityapi List Bills Example](https://apis.io/examples/utilityapi/utilityapi-list-bills-example/)
+- [Utilityapi List Intervals Example](https://apis.io/examples/utilityapi/utilityapi-list-intervals-example/)
+- [Utilityapi List Meters Example](https://apis.io/examples/utilityapi/utilityapi-list-meters-example/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [UtilityAPI](https://apis.io/collections/utilityapi/open-utilityapi/)
+- [Utility Accounting API](https://apis.io/collections/utilityapi/open-utilityapi-accounting-api/)
+- [Utility Accounting Authorizations API](https://apis.io/collections/utilityapi/open-utilityapi-authorizations-api/)
+- [Utility Accounting Bills API](https://apis.io/collections/utilityapi/open-utilityapi-bills-api/)
+- [Utility Accounting Events API](https://apis.io/collections/utilityapi/open-utilityapi-events-api/)
+- [Utility Accounting Files API](https://apis.io/collections/utilityapi/open-utilityapi-files-api/)
+- [Utility Accounting Forms API](https://apis.io/collections/utilityapi/open-utilityapi-forms-api/)
+- [Utility Accounting Intervals API](https://apis.io/collections/utilityapi/open-utilityapi-intervals-api/)
+- [Utility Accounting Meters API](https://apis.io/collections/utilityapi/open-utilityapi-meters-api/)
+- [Utility Accounting Templates API](https://apis.io/collections/utilityapi/open-utilityapi-templates-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [UtilityAPI — jsonschema rules](https://apis.io/rules/utilityapi/utilityapi-jsonschema-spectral-rules/)
+- [UtilityAPI API Rules](https://apis.io/rules/utilityapi/utilityapi-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Utilityapi Authentication](https://apis.io/security/utilityapi/utilityapi-authentication/)
+- [Utilityapi Domain Security](https://apis.io/security/utilityapi/utilityapi-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Utilityapi Plans Pricing](https://apis.io/plans/utilityapi/utilityapi-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Utilityapi Rate Limits](https://apis.io/rate-limits/utilityapi/utilityapi-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Utilityapi Finops](https://apis.io/finops/utilityapi/utilityapi-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://utilityapi.com/)
 - [Documentation](https://utilityapi.com/docs)
-- [Sign Up](https://utilityapi.com/register)
 - [Pricing](https://utilityapi.com/pricing)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/openapi/utilityapi-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/utilityapi/refs/heads/main/vocabulary/utilityapi-vocabulary.yml)
+- [Blog](https://utilityapi.com/blog)
+- [GitHub](https://github.com/utilityapi)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 38.5** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 67.0 |
+| Contract governance | 27.3 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 31.6 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 13.9** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/utilityapi/](https://apis.io/providers/utilityapi/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for UtilityAPI: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/utilityapi/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
